@@ -1,1 +1,99 @@
+/* styles.css */
+:root {
+  --bg: #0f1115;
+  --text: #e6e6e6;
+  --muted: #9aa0a6;
+  --card-bg: #171a21;
+  --card-border: #252a34;
+  --accent: #4f8cff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  line-height: 1.5;
+}
+
+.header {
+  max-width: 1100px;
+  margin: 2rem auto 1rem;
+  padding: 0 1rem;
+}
+
+.header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Grille 3 colonnes fixes sur écrans moyens et larges */
+.gallery {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Carte image avec légende */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #2f3643;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Ratio visuel harmonisé, image couvrante */
+.card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #0b0d12;
+}
+
+/* Légende discrète */
+.card figcaption {
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  border-top: 1px solid var(--card-border);
+}
+
+/* Responsivité: 2 colonnes sur tablettes, 1 sur mobiles */
+@media (max-width: 960px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
 
