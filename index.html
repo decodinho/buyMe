@@ -57,7 +57,7 @@
 
       <!-- Zone pour afficher les données API -->
       <section id="api-section">
-        <h2>Données de l'API</h2>
+        <h2>Données de l'API GET</h2>
         <div id="api-data"></div>
       </section>
     </main>
@@ -66,7 +66,7 @@
       async function loadData() {
         const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
         const data = await response.json();
-        console.log("Données API GET:", data);
+        console.log("Données API", data);
         // Affichage dans la page
         const resultDiv = document.getElementById("result");
         resultDiv.textContent = JSON.stringify(data, null, 2);
