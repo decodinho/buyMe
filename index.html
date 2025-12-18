@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Une vue variée d'articles </title>
+    <title>Une vue variée d'articles</title>
     <link rel="stylesheet" href="styleIndex.css" />
   </head>
   <body>
@@ -54,7 +54,24 @@
           <figcaption>Image 10</figcaption>
         </figure>
       </section>
+
+      <!-- Zone pour afficher les données API -->
+      <section id="api-section">
+        <h2>Données de l'API</h2>
+        <div id="api-data"></div>
+      </section>
     </main>
+
+    <script>
+      async function loadData() {
+          const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
+          const data = await response.json();
+
+          console.log("Données API :", data);
+       
+      }
+
+      window.onload = loadData;
+    </script>
   </body>
 </html>
-
