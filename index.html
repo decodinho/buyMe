@@ -75,21 +75,25 @@
     </main>
 
     <script>
-      async function loadData() {
-        try {
-          // ⚠️ Remplace par l’URL réelle de ton API Gateway
+      async function loadData() { 
+        try { 
           const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
-          const data = await response.json();
-          //console.log("Données API :", data);
-
-
-        } catch (error) {
-          console.error("Erreur API :", error);
-          document.getElementById("api-data").textContent = "Impossible de charger les données venant de dynamoDB.";
-        }
+          console.log("Status:", response.status);
+          const text = await response.text();
+          console.log("Réponse brute:", text); 
+          // Essayer de parser en JSON 
+          try { 
+            const data = JSON.parse(text); 
+            document.getElementById("api-data").textContent = JSON.stringify(data, null, 2); 
+          } catch { 
+            document.getElementById("api-data").textContent = text; 
+          } 
+        } catch (error) { 
+          console.error("Erreur API :", error); 
+          document.getElementById("api-data").textContent = "Impossible de charger les données."; 
+        } 
       }
-
-      window.onload = loadData;
+          window.onload = loadData;
     </script>
   </body>
 </html>
