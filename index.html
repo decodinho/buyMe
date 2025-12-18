@@ -74,51 +74,18 @@
       </section>
     </main>
 
-    <script>
-  async function loadData() {
-    console.log("➡️ Fonction loadData appelée");
-
-    try {
-      const response = await fetch(
-        "https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1"
-      );
-      console.log("➡️ Requête envoyée");
-      console.log("➡️ Status HTTP:", response.status);
-
-      const text = await response.text();
-      console.log("➡️ Réponse brute:", text);
-
-      // Étape 1 : parser l'objet renvoyé par API Gateway
-      const raw = JSON.parse(text);
-      console.log("➡️ Objet brut:", raw);
-
-      // Étape 2 : parser le body (qui est une chaîne JSON)
-      const data = JSON.parse(raw.body);
-      console.log("➡️ Données finales:", data);
-
-      const apiDiv = document.getElementById("api-data");
-
-      if (Array.isArray(data)) {
-        const list = document.createElement("ul");
-        data.forEach((item) => {
-          const li = document.createElement("li");
-          li.textContent = JSON.stringify(item);
-          list.appendChild(li);
-        });
-        apiDiv.innerHTML = "";
-        apiDiv.appendChild(list);
-      } else {
-        apiDiv.textContent = JSON.stringify(data, null, 2);
-      }
-    } catch (error) {
-      console.error("Erreur API :", error);
-      document.getElementById("api-data").textContent =
-        "Impossible de charger les données.";
-    }
-  }
-
-  window.onload = loadData;
-</script>
+    <script> 
+      async function loadData() { 
+        console.log("➡️ Fonction loadData appelée"); 
+        try { 
+          const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
+          console.log("➡️ Requête envoyée"); 
+        } catch (error) { 
+          console.error("Erreur API :", error); 
+        } 
+      } 
+      window.onload = loadData; 
+    </script>
 
   </body>
 </html>
