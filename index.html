@@ -25,46 +25,12 @@
 
     <main>
       <section class="gallery" aria-label="Galerie d'images">
+        <!-- tes figures statiques -->
         <figure class="card">
           <img src="sac1.png" alt="sac de classe" loading="lazy" />
           <figcaption>cartable</figcaption>
         </figure>
-        <figure class="card">
-          <img src="sac2.png" alt="sac de classe" loading="lazy" />
-          <figcaption>cartable</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="voiture1.png" alt="voiture de luxe" loading="lazy" />
-          <figcaption>voiture TT</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="voiture2.png" alt="voiture de ville" loading="lazy"/>
-          <figcaption>Voiture de ville</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="laptop1.png" alt="laptop" loading="lazy" />
-          <figcaption>laptop hp</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="laptop2.png" alt="Ville de nuit" loading="lazy" />
-          <figcaption>Image 6</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="tel1.png" alt="Telephone Samsung" loading="lazy" />
-          <figcaption>Telephone Samsung</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="https://picsum.photos/id/1085/800/600" alt="Champ de fleurs" loading="lazy" />
-          <figcaption>Image 8</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="https://picsum.photos/id/109/800/600" alt="Bâtiment moderne" loading="lazy" />
-          <figcaption>Image 9</figcaption>
-        </figure>
-        <figure class="card">
-          <img src="https://picsum.photos/id/110/800/600" alt="Chemin forestier" loading="lazy" />
-          <figcaption>Image 10</figcaption>
-        </figure>
+        <!-- ... autres images ... -->
       </section>
 
       <!-- Zone pour afficher les données API -->
@@ -75,25 +41,38 @@
     </main>
 
     <script>
-      async function loadData() { 
-        try { 
+      async function loadData() {
+        try {
           const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
-          console.log("Status:", response.status);
-          const text = await response.text();
-          console.log("Réponse brute:", text); 
-          // Essayer de parser en JSON 
-          try { 
-            const data = JSON.parse(text); 
-            document.getElementById("api-data").textContent = JSON.stringify(data, null, 2); 
-          } catch { 
-            document.getElementById("api-data").textContent = text; 
-          } 
-        } catch (error) { 
-          console.error("Erreur API :", error); 
-          document.getElementById("api-data").textContent = "Impossible de charger les données."; 
-        } 
+          const raw = await response.json();   // Étape 1 : parse la réponse API Gateway
+          console.log("Réponse brute:", raw);
+
+          // Étape 2 : parser le body (qui est une chaîne JSON)
+          const data = JSON.parse(raw.body);
+          console.log("Données finales:", data);
+
+          const apiDiv = document.getElementById("api-data");
+
+          if (Array.isArray(data)) {
+            const list = document.createElement("ul");
+            data.forEach(item => {
+              const li = document.createElement("li");
+              li.textContent = JSON.stringify(item);
+              list.appendChild(li);
+            });
+            apiDiv.innerHTML = "";
+            apiDiv.appendChild(list);
+          } else {
+            apiDiv.textContent = JSON.stringify(data, null, 2);
+          }
+
+        } catch (error) {
+          console.error("Erreur API :", error);
+          document.getElementById("api-data").textContent = "Impossible de charger les données.";
+        }
       }
-          window.onload = loadData;
+
+      window.onload = loadData;
     </script>
   </body>
 </html>
