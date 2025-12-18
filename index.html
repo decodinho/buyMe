@@ -82,22 +82,6 @@
           const data = await response.json();
           console.log("Données API :", data);
 
-          const apiDiv = document.getElementById("api-data");
-
-          // Si l'API renvoie un tableau d'articles
-          if (Array.isArray(data)) {
-            const list = document.createElement("ul");
-            data.forEach(item => {
-              const li = document.createElement("li");
-              li.textContent = JSON.stringify(item);
-              list.appendChild(li);
-            });
-            apiDiv.innerHTML = "";
-            apiDiv.appendChild(list);
-          } else {
-            // Si c'est un objet simple
-            apiDiv.textContent = JSON.stringify(data, null, 2);
-          }
 
         } catch (error) {
           console.error("Erreur API :", error);
