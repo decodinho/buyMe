@@ -84,8 +84,8 @@
             
             //c'est ici le premier probleme
             // 2. Extraction du JSON (Format Lambda : { statusCode, body })
-            const raw = await response;
-            
+            //const raw = await response.json();
+            console.log("merci");
             // 3. Analyse du 'body' (souvent une chaîne JSON dans AWS Lambda)
             //const data = typeof raw.body === "string" ? JSON.parse(raw.body) : raw;
             
