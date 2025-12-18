@@ -83,7 +83,7 @@
             const response = await fetch("l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=voitures&productID=1");
             
             // 2. Extraction du JSON (Format Lambda : { statusCode, body })
-            //const raw = await response.json();
+            const raw = await response.json();
             
             // 3. Analyse du 'body' (souvent une chaîne JSON dans AWS Lambda)
             //const data = typeof raw.body === "string" ? JSON.parse(raw.body) : raw;
