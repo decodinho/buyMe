@@ -3,74 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Application React 19 Moderne</title>
-  <link rel="stylesheet" href="styleIndex.css" />
-    <style>
-      #api-section {
-        margin-top: 2rem;
-        padding: 1rem;
-        border: 1px solid #ccc;
-        background: #f9f9f9;
-      }
-      #api-data ul {
-        list-style-type: disc;
-        padding-left: 20px;
-      }
-    </style>
-  <!-- React et ReactDOM en global -->
+  <title>Application React 2025</title>
+  <!-- Chargement des scripts (Ordre critique) -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-  <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">Chargement...</div>
 
   <script type="text/babel">
-    import { useState, useEffect } from 'react';
-    //const { useState } = React;
-    //const { createRoot } = ReactDOM;
+    // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
+    const { useState, useEffect } = React;
 
+    // 2. COMPOSANT ENFANT (Manquant dans votre code)
+    function ListeProduits({ produits }) {
+      return (
+        <ul>
+          {produits.length > 0 ? (
+            produits.map((item, index) => (
+              <li key={index}>{item.nom || "Article sans nom"}</li>
+            ))
+          ) : (
+            <p>Aucun produit trouvé ou chargement...</p>
+          )}
+        </ul>
+      );
+    }
 
     function App() {
-          console.log("fonctionne");
-          const [choix, setChoix] = useState("voitures");//par defaut le rendu renverra les datas de "voitures".
-          const [produits, setProduits] = useState([]);
-          
-          useEffect(() => {
-            // Appel API dynamique selon la catégorie choisie
-            fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
-              .then(res => res.json())
-              .then(data => setProduits(data))
-              .catch(err => console.error("Erreur:", err));
-          }, [choix]);
-        
-          return (
-            <div>
-              <button onClick={() => setChoix("voitures")}>
-                <figure>
-                  <img src="voiture.png" alt="Voitures" width="150px" height="150px"/>
-                  <figcaption>Voitures</figcaption>
-                </figure>
-              </button>
-        
-              <button onClick={() => setChoix("phones")}>
-                <figure>
-                  <img src="phone.png" alt="Téléphones" width="150px" height="150px"/>
-                  <figcaption>Phones</figcaption>
-                </figure>
-              </button>
-        
-              <h1>Rayon : {choix}</h1>
-              <ListeProduits produits={produits} />
-            </div>
-          );
-        }
-        
-        
-            const root = createRoot(document.getElementById("root"));
-            root.render(<App />);
+      const [choix, setChoix] = useState("voitures");
+      const [produits, setProduits] = useState([]);
+      
+      useEffect(() => {
+        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
+        fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com{choix}`)
+          .then(res => res.json())
+          .then(data => setProduits(data))
+          .catch(err => console.error("Erreur API:", err));
+      }, [choix]);
+    
+      return (
+        <div>
+          <button onClick={() => setChoix("voitures")}>
+            <figure>
+              <img src="voiture.png" alt="Voitures" width="100" />
+              <figcaption>Voitures</figcaption>
+            </figure>
+          </button>
+    
+          <button onClick={() => setChoix("phones")}>
+            <figure>
+              <img src="phone.png" alt="Téléphones" width="100" />
+              <figcaption>Phones</figcaption>
+            </figure>
+          </button>
+    
+          <h1>Rayon actuel : {choix}</h1>
+          <ListeProduits produits={produits} />
+        </div>
+      );
+    }
+    
+    // 3. RENDU FINAL (Utilisation correcte de ReactDOM)
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
   </script>
 </body>
 </html>
