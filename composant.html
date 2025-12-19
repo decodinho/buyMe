@@ -22,7 +22,7 @@
         <ul>
           {produits.length > 0 ? (
             produits.map((item, index) => (
-              <li key={index}>{item.nom || "Article sans nom"}</li>
+              <li key={index}>{item || "Article sans nom"}</li>
             ))
           ) : (
             <p>Aucun produit trouvé ou chargement...</p>
