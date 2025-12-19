@@ -28,47 +28,48 @@
   <div id="root"></div>
 
   <script type="text/babel">
+    import { useState, useEffect } from 'react';
     const { useState } = React;
     const { createRoot } = ReactDOM;
 
 
-function App() {
-  const [choix, setChoix] = useState("voitures");//par defaut le rendu renverra les datas de "voitures".
-  const [produits, setProduits] = useState([]);
-
-  useEffect(() => {
-    // Appel API dynamique selon la catégorie choisie
-    fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
-      .then(res => res.json())
-      .then(data => setProduits(data))
-      .catch(err => console.error("Erreur:", err));
-  }, [choix]);
-
-  return (
-    <div>
-      <button onClick={() => setChoix("voitures")}>
-        <figure>
-          <img src="voiture.png" alt="Voitures" width="150px" height="150px"/>
-          <figcaption>Voitures</figcaption>
-        </figure>
-      </button>
-
-      <button onClick={() => setChoix("phones")}>
-        <figure>
-          <img src="phone.png" alt="Téléphones" width="150px" height="150px"/>
-          <figcaption>Phones</figcaption>
-        </figure>
-      </button>
-
-      <h1>Rayon : {choix}</h1>
-      <ListeProduits produits={produits} />
-    </div>
-  );
-}
-
-
-    const root = createRoot(document.getElementById("root"));
-    root.render(<App />);
+    function App() {
+          const [choix, setChoix] = useState("voitures");//par defaut le rendu renverra les datas de "voitures".
+          const [produits, setProduits] = useState([]);
+        
+          useEffect(() => {
+            // Appel API dynamique selon la catégorie choisie
+            fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
+              .then(res => res.json())
+              .then(data => setProduits(data))
+              .catch(err => console.error("Erreur:", err));
+          }, [choix]);
+        
+          return (
+            <div>
+              <button onClick={() => setChoix("voitures")}>
+                <figure>
+                  <img src="voiture.png" alt="Voitures" width="150px" height="150px"/>
+                  <figcaption>Voitures</figcaption>
+                </figure>
+              </button>
+        
+              <button onClick={() => setChoix("phones")}>
+                <figure>
+                  <img src="phone.png" alt="Téléphones" width="150px" height="150px"/>
+                  <figcaption>Phones</figcaption>
+                </figure>
+              </button>
+        
+              <h1>Rayon : {choix}</h1>
+              <ListeProduits produits={produits} />
+            </div>
+          );
+        }
+        
+        
+            const root = createRoot(document.getElementById("root"));
+            root.render(<App />);
   </script>
 </body>
 </html>
