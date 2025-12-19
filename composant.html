@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Direct Integration 2025</title>
-
-    <!-- LES SCRIPTS CI-DESSOUS SONT OBLIGATOIRES POUR QUE ÇA FONCTIONNE -->
-    <!-- React (Moteur) -->
+<html>
+<head>
     <script src="unpkg.com"></script>
-
-    <!-- React DOM (Rendu) -->
     <script src="unpkg.com"></script>
-    
-    <!-- Babel (Traducteur) -->
     <script src="unpkg.com"></script>
-
-  </head>
-  <body>
-    <div id="root">Chargement du composant...</div>
+</head>
+<body>
+    <div id="root"></div>
 
     <script type="text/babel">
-      function App() {
-        const raw = [
-          { id: 101, nom: "Produit Tendance", prix: "29.99 €" },
-          { id: 102, nom: "Nouveauté 2025", prix: "45.00 €" },
-        ];
+        // Le composant qui génère la liste
+        function ListeProduits({ categorie }) {
+            const articles = [
+                { id: 1, nom: "Pomme", cat: "Fruits" },
+                { id: 2, nom: "Carotte", cat: "Legumes" },
+                { id: 3, nom: "Banane", cat: "Fruits" }
+            ];
 
-        return (
-          <div style={{ fontFamily: "sans-serif", padding: "20px", border: "1px solid #ddd" }}>
-            <h1>Page d'accueil (Anonyme)</h1>
-            <p>Premier article trouvé : <strong>{raw[0].nom}</strong></p>
-            <ul>
-              {raw.map((item) => (
-                <li key={item.id}>
-                  {item.nom} - {item.prix}
-                </li>
-              ))}
-            </ul>
-          </div>
-        );
-      }
+            // On ne garde que les articles de la catégorie reçue
+            const selection = articles.filter(a => a.cat === categorie);
 
-      const container = document.getElementById("root");
-      const root = ReactDOM.createRoot(container);
-      root.render(<App />);
+            return (
+                <ul>
+                    {selection.map(a => <li key={a.id}>{a.nom}</li>)}
+                </ul>
+            );
+        }
+
+        // Le composant principal
+        function App() {
+            const [choix, setChoix] = React.useState("Fruits");
+
+            return (
+                <div>
+                    <button onClick={() => setChoix("Fruits")}>Voir Fruits</button>
+                    <button onClick={() => setChoix("Legumes")}>Voir Légumes</button>
+                    
+                    <h1>Rayon : {choix}</h1>
+                    <ListeProduits categorie={choix} />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
-  </body>
+</body>
 </html>
