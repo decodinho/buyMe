@@ -5,36 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Direct Integration 2025</title>
 
-    <!-- 1. CHARGEMENT DES LIBRAIRIES (Ordre critique) -->
-   
+    <!-- LES SCRIPTS CI-DESSOUS SONT OBLIGATOIRES POUR QUE ÇA FONCTIONNE -->
+    <script src="unpkg.com" crossorigin></script>
+    <script src="unpkg.com" crossorigin></script>
+    <script src="unpkg.com"></script>
   </head>
   <body>
-    <div id="root">
-      <!-- Message de secours si JS est désactivé ou échoue -->
-      Chargement du composant...
-    </div>
+    <div id="root">Chargement du composant...</div>
 
-    <!-- 2. CODE REACT CONDENSÉ (Type text/babel obligatoire) -->
     <script type="text/babel">
       function App() {
-        // Exemple de données "raw" (anonyme)
         const raw = [
           { id: 101, nom: "Produit Tendance", prix: "29.99 €" },
           { id: 102, nom: "Nouveauté 2025", prix: "45.00 €" },
         ];
 
         return (
-          <div
-            style={{
-              fontFamily: "sans-serif",
-              padding: "20px",
-              border: "1px solid #ddd",
-            }}
-          >
+          <div style={{ fontFamily: "sans-serif", padding: "20px", border: "1px solid #ddd" }}>
             <h1>Page d'accueil (Anonyme)</h1>
-            <p>
-              Premier article trouvé : <strong>{raw[0].nom}</strong>
-            </p>
+            <p>Premier article trouvé : <strong>{raw[0].nom}</strong></p>
             <ul>
               {raw.map((item) => (
                 <li key={item.id}>
@@ -46,7 +35,6 @@
         );
       }
 
-      // Rendu final (Syntaxe React 18+)
       const container = document.getElementById("root");
       const root = ReactDOM.createRoot(container);
       root.render(<App />);
