@@ -31,27 +31,6 @@
     const { useState } = React;
     const { createRoot } = ReactDOM;
 
-    function ListeProduits({ categorie }) {//cette fonction affice juste ce qui vient de la bdd
-      //const articles = [
-       // { id: 1, nom: "Pomme", cat: "Fruits" },
-        //{ id: 2, nom: "Carotte", cat: "Legumes" },
-        //{ id: 3, nom: "Banane", cat: "Fruits" }
-      //];
-
-      //Important: il faut un tableau appele articles qui va contenir toutes les datas venant de la bdd
-      const selection = articles.filter(a => a.cat === categorie);
-      console.log("ca fonctionne");  //{selection.map(a => <li key={a[0]}>{a[1]}</li>)}
-      return (
-        <ul>
-          <li>deco</li>
-        </ul>
-        
-      );
-        
-      
-    }
-
-//import { useState, useEffect } from 'react';
 
 function App() {
   const [choix, setChoix] = useState("voitures");//par defaut le rendu renverra les datas de "voitures".
