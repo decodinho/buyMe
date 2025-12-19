@@ -21,9 +21,8 @@
       return (
         <ul>
           {produits.length > 0 ? (
-            console.log("ca passe");
             produits.map((item, index) => (
-              <li key={index}>{item.productID || "Article sans nom"}</li>
+              <li key={item.productID}>{item.nameArticle || "Article sans nom"}</li>
             ))
           ) : (
             <p>Aucun produit trouvé ou chargement...</p>
