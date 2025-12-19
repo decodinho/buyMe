@@ -80,7 +80,7 @@
           
           try {
             // 1. Appel de l'API
-            const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=phones&productID=1");
+            const response = await fetch("https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=phones&productID=2");
             // 2. Extraction du JSON (Format Lambda : { statusCode, body })
             const raw = await response.json();
             console.log("Réponse reçue :",raw);
