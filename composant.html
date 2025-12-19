@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <title>React 19 - ESM & Babel</title>
+    <!-- Chargement de Babel pour transformer le JSX en temps réel -->
     <script src="unpkg.com"></script>
-    <script src="unpkg.com"></script>
-    <script src="unpkg.com"></script>
+    
+    <!-- Import Map : définit les sources de React sans scripts classiques -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "esm.sh",
+        "react-dom/client": "esm.sh"
+      }
+    }
+    </script>
 </head>
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
-        // Le composant qui génère la liste
+    <!-- Le type "text/babel" est nécessaire pour que Babel transforme le code -->
+    <!-- data-type="module" permet d'utiliser les imports dans le script Babel -->
+    <script type="text/babel" data-type="module">
+        import React, { useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+
         function ListeProduits({ categorie }) {
             const articles = [
                 { id: 1, nom: "Pomme", cat: "Fruits" },
@@ -17,7 +32,6 @@
                 { id: 3, nom: "Banane", cat: "Fruits" }
             ];
 
-            // On ne garde que les articles de la catégorie reçue
             const selection = articles.filter(a => a.cat === categorie);
 
             return (
@@ -27,9 +41,9 @@
             );
         }
 
-        // Le composant principal
         function App() {
-            const [choix, setChoix] = React.useState("Fruits");
+            // Utilisation directe de useState grâce à l'import
+            const [choix, setChoix] = useState("Fruits");
 
             return (
                 <div>
@@ -42,7 +56,7 @@
             );
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
+        const root = createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
