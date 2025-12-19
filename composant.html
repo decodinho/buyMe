@@ -37,7 +37,7 @@
       const [choix, setChoix] = useState("Fruits");
       return (
         <div>
-          <button onClick={() => setChoix("Fruits")}>Voir Fruits</button>
+          <button onClick={() => setChoix("Fruits")}><figure class="card"><img src="sac1.png" alt="sac de classe" loading="lazy" /><figcaption>cartable</figcaption> </figure></button>
           <button onClick={() => setChoix("Legumes")}>Voir Légumes</button>
           <h1>Rayon : {choix}</h1>
           <ListeProduits categorie={choix} />
