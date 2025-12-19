@@ -1,65 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application React 19 Moderne</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application React 19 Moderne</title>
 
-    <!-- Import Map : Doit être défini AVANT tout chargement de module -->
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "esm.sh",
-        "react-dom/client": "esm.sh"
-      }
-    }
-    </script>
+  <!-- React et ReactDOM en global -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-    <!-- Charge Babel pour transformer le JSX (URL corrigée) -->
-    <script src="unpkg.com"></script>
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
+  <div id="root"></div>
 
-    <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+    const { createRoot } = ReactDOM;
 
-    <!-- Script de type "text/babel" avec data-type="module" pour interpréter l'importmap -->
-    <script type="text/babel" data-type="module">
-        import React, { useState } from 'react';
-        import { createRoot } from 'react-dom/client';
+    function ListeProduits({ categorie }) {
+      const articles = [
+        { id: 1, nom: "Pomme", cat: "Fruits" },
+        { id: 2, nom: "Carotte", cat: "Legumes" },
+        { id: 3, nom: "Banane", cat: "Fruits" }
+      ];
+      const selection = articles.filter(a => a.cat === categorie);
+      return (
+        <ul>
+          {selection.map(a => <li key={a.id}>{a.nom}</li>)}
+        </ul>
+      );
+    }
 
-        function ListeProduits({ categorie }) {
-            const articles = [
-                { id: 1, nom: "Pomme", cat: "Fruits" },
-                { id: 2, nom: "Carotte", cat: "Legumes" },
-                { id: 3, nom: "Banane", cat: "Fruits" }
-            ];
+    function App() {
+      const [choix, setChoix] = useState("Fruits");
+      return (
+        <div>
+          <button onClick={() => setChoix("Fruits")}>Voir Fruits</button>
+          <button onClick={() => setChoix("Legumes")}>Voir Légumes</button>
+          <h1>Rayon : {choix}</h1>
+          <ListeProduits categorie={choix} />
+        </div>
+      );
+    }
 
-            const selection = articles.filter(a => a.cat === categorie);
-
-            return (
-                <ul>
-                    {selection.map(a => <li key={a.id}>{a.nom}</li>)}
-                </ul>
-            );
-        }
-
-        function App() {
-            const [choix, setChoix] = useState("Fruits");
-
-            return (
-                <div>
-                    <button onClick={() => setChoix("Fruits")}>Voir Fruits</button>
-                    <button onClick={() => setChoix("Legumes")}>Voir Légumes</button>
-                    
-                    <h1>Rayon : {choix}</h1>
-                    <ListeProduits categorie={choix} />
-                </div>
-            );
-        }
-
-        const root = createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-
+    const root = createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
 </body>
 </html>
