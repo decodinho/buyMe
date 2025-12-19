@@ -40,9 +40,12 @@
 
       //Important: il faut un tableau appele articles qui va contenir toutes les datas venant de la bdd
       const selection = articles.filter(a => a.cat === categorie);
-      console.log("ca fonctionne");  
-      return ( //<ul>{selection.map(a => <li key={a.id}>{a.nom}</li>)}</ul>
-        null
+      console.log("ca fonctionne");  //{selection.map(a => <li key={a[0]}>{a[1]}</li>)}
+      return (
+        <ul>
+          <li>deco</li>
+        </ul>
+        
       );
         
       
