@@ -2,11 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>React 19 - ESM & Babel</title>
-    <!-- Chargement de Babel pour transformer le JSX en temps réel -->
-    <script src="unpkg.com"></script>
-    
-    <!-- Import Map : définit les sources de React sans scripts classiques -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application React 19 Moderne</title>
+
+    <!-- Charge Babel depuis jsDelivr pour transformer le JSX en temps réel -->
+    <script src="cdn.jsdelivr.net"></script>
+
+    <!-- Import Map : Définit où trouver React sans utiliser de balises <script> classiques -->
     <script type="importmap">
     {
       "imports": {
@@ -17,10 +19,10 @@
     </script>
 </head>
 <body>
+
     <div id="root"></div>
 
-    <!-- Le type "text/babel" est nécessaire pour que Babel transforme le code -->
-    <!-- data-type="module" permet d'utiliser les imports dans le script Babel -->
+    <!-- Script de type "text/babel" pour le JSX + "data-type=module" pour autoriser les imports -->
     <script type="text/babel" data-type="module">
         import React, { useState } from 'react';
         import { createRoot } from 'react-dom/client';
@@ -42,7 +44,6 @@
         }
 
         function App() {
-            // Utilisation directe de useState grâce à l'import
             const [choix, setChoix] = useState("Fruits");
 
             return (
@@ -56,8 +57,10 @@
             );
         }
 
+        // Initialisation de l'application sur la div #root
         const root = createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
+
 </body>
 </html>
