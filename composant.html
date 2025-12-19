@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application React 19 Moderne</title>
 
-    <!-- Charge Babel depuis jsDelivr pour transformer le JSX en temps réel -->
-    <script src="cdn.jsdelivr.net"></script>
-
-    <!-- Import Map : Définit où trouver React sans utiliser de balises <script> classiques -->
+    <!-- Import Map : Doit être défini AVANT tout chargement de module -->
     <script type="importmap">
     {
       "imports": {
@@ -17,12 +14,15 @@
       }
     }
     </script>
+
+    <!-- Charge Babel pour transformer le JSX (URL corrigée) -->
+    <script src="unpkg.com"></script>
 </head>
 <body>
 
     <div id="root"></div>
 
-    <!-- Script de type "text/babel" pour le JSX + "data-type=module" pour autoriser les imports -->
+    <!-- Script de type "text/babel" avec data-type="module" pour interpréter l'importmap -->
     <script type="text/babel" data-type="module">
         import React, { useState } from 'react';
         import { createRoot } from 'react-dom/client';
@@ -57,7 +57,6 @@
             );
         }
 
-        // Initialisation de l'application sur la div #root
         const root = createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
