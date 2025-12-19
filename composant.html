@@ -31,31 +31,56 @@
     const { useState } = React;
     const { createRoot } = ReactDOM;
 
-    function ListeProduits({ categorie }) {
-      const articles = [
-        { id: 1, nom: "Pomme", cat: "Fruits" },
-        { id: 2, nom: "Carotte", cat: "Legumes" },
-        { id: 3, nom: "Banane", cat: "Fruits" }
-      ];
+    function ListeProduits({ categorie }) {//cette fonction affice juste ce qui vient de la bdd
+      //const articles = [
+       // { id: 1, nom: "Pomme", cat: "Fruits" },
+        //{ id: 2, nom: "Carotte", cat: "Legumes" },
+        //{ id: 3, nom: "Banane", cat: "Fruits" }
+      //];
+
+      //Important: il faut un tableau appele articles qui va contenir toutes les datas venant de la bdd
       const selection = articles.filter(a => a.cat === categorie);
-      return (
-        <ul>
-          {selection.map(a => <li key={a.id}>{a.nom}</li>)}
-        </ul>
+      return ( //<ul>{selection.map(a => <li key={a.id}>{a.nom}</li>)}</ul>
+        
       );
     }
 
-    function App() {
-      const [choix, setChoix] = useState("Fruits");
-      return (
-        <div>
-          <button onClick={() => setChoix("Fruits")}><figure><img src="sac1.png" alt="sac de classe" loading="lazy" width="150px" height="150px"/><figcaption>voitures</figcaption> </figure></button>
-          <button onClick={() => setChoix("Legumes")}>Voir Légumes</button>
-          <h1>Rayon : {choix}</h1>
-          <ListeProduits categorie={choix} />
-        </div>
-      );
-    }
+//import { useState, useEffect } from 'react';
+
+function App() {
+  const [choix, setChoix] = useState("voitures");//par defaut le rendu renverra les datas de "voitures".
+  const [produits, setProduits] = useState([]);
+
+  useEffect(() => {
+    // Appel API dynamique selon la catégorie choisie
+    fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
+      .then(res => res.json())
+      .then(data => setProduits(data))
+      .catch(err => console.error("Erreur:", err));
+  }, [choix]);
+
+  return (
+    <div>
+      <button onClick={() => setChoix("voitures")}>
+        <figure>
+          <img src="voiture.png" alt="Voitures" width="150px" height="150px"/>
+          <figcaption>Voitures</figcaption>
+        </figure>
+      </button>
+
+      <button onClick={() => setChoix("phones")}>
+        <figure>
+          <img src="phone.png" alt="Téléphones" width="150px" height="150px"/>
+          <figcaption>Phones</figcaption>
+        </figure>
+      </button>
+
+      <h1>Rayon : {choix}</h1>
+      <ListeProduits produits={produits} />
+    </div>
+  );
+}
+
 
     const root = createRoot(document.getElementById("root"));
     root.render(<App />);
