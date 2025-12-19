@@ -88,7 +88,7 @@
             const data = typeof raw.body === "string" ? JSON.parse(raw.body) : raw;
             
             // 4. Affichage dans le navigateur (formatté pour la lisibilité)
-            //displayElement.textContent = JSON.stringify(data, null, 2);
+            displayElement.textContent = JSON.stringify(data, null, 2);
             
           } catch (error) {
             console.error("Erreur API:", error);
