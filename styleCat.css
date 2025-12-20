@@ -1,0 +1,40 @@
+div {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:nth-child(1) {
+  background-color: #4CAF50; /* Vert */
+}
+
+button:nth-child(2) {
+  background-color: #FFC0CB; /* Rose */
+}
+
+figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  width: 60px; /* Ajuste l'image pour tenir dans le rond */
+  height: auto;
+}
+
+figcaption {
+  font-size: 14px;
+}
