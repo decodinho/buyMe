@@ -3,7 +3,7 @@ div {
   gap: 20px;
 }
 
-button {
+.category {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -15,11 +15,11 @@ button {
   justify-content: center;
 }
 
-button:nth-child(1) {
+.category:nth-child(1) {
   background-color: #4CAF50; /* Vert */
 }
 
-button:nth-child(2) {
+.category:nth-child(2) {
   background-color: #FFC0CB; /* Rose */
 }
 
