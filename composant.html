@@ -41,7 +41,7 @@
         // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
-          .then(data => setProduits(data))
+          .then(data => {console.log(data);setProduits(data);});
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
     
