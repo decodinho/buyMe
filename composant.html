@@ -32,7 +32,7 @@
     }
 
     function App() {
-      const [choix, setChoix] = useState("voitures");
+      const [choix, setChoix] = useState("voiture");
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
@@ -45,10 +45,10 @@
     
       return (
         <div>
-          <button onClick={() => setChoix("voitures")}>
+          <button onClick={() => setChoix("voiture")}>
             <figure>
               <img src="voiture1.png" alt="Voitures" width="100" />
-              <figcaption>Voitures</figcaption>
+              <figcaption>Voiture</figcaption>
             </figure>
           </button>
     
