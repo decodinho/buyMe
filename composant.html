@@ -19,6 +19,7 @@
     // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
       return (
+        console.log(produits.length);
         <ul>
           {produits.length > 0 ? (
             produits.map((item, index) => (
