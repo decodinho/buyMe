@@ -22,12 +22,15 @@
       return (
         //console.log(produits.length);
         <ul>
-            {Object.values(produits).length > 0 ? (
-              console.log(Object.values(produits)[0]['detailArticle'])  //affice un tableau dans lequel il y'a des dicos
-            ) : (
-              <p>Aucun produit trouvé</p>
-            )}
-       </ul>
+    {/* Affichage de la longueur dans la console avant le rendu */}
+    {console.log("Nombre de produits :", Object.values(produits).length)}
+
+    {Object.values(produits).map((produit, index) => (
+      <li key={produit.productID || index}>
+        {produit.detailArticle || "Article sans detail"}
+      </li>
+    ))}
+  </ul>
       );
     }
 
