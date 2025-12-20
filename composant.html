@@ -23,9 +23,9 @@
         //console.log(produits.length);
         <ul>
           {produits.length > 0 ? (
-            
-              <li> produits</li>
-            
+            produits.map((produit) => (
+            <li key={produit.productID}>{produit.nameArticle || "Article sans nom"}</li>
+          ))
           ) : (
             <p>Aucun produit trouvé</p>
           )}
