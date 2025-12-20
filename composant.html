@@ -22,14 +22,16 @@
       return (
         //console.log(produits.length);
         <ul>
-          {Object.keys(produits).length > 0 ? (
-            Object.keys(produits).map((produit) => (
-            <li key={produit.productID}>{produit.nameArticle || "Article sans nom"}</li>
-          ))
-          ) : (
-            <p>Aucun produit trouvé</p>
-          )}
-        </ul>
+            {Object.values(produits).length > 0 ? (
+              Object.values(produits).map((produit, index) => (
+                <li key={produit.productID || index}>
+                  {produit.nameArticle || "Article sans nom"}
+                </li>
+              ))
+            ) : (
+              <p>Aucun produit trouvé</p>
+            )}
+       </ul>
       );
     }
 
