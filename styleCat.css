@@ -3,7 +3,7 @@ ul {
 }
 
 div {
-  display: flex;
+  
   gap: 20px;
 }
 
@@ -14,18 +14,11 @@ div {
   border: none;
   cursor: pointer;
   overflow: hidden;
-  display: flex;
+ 
   align-items: center;
   justify-content: center;
 }
 
-.category:nth-child(1) {
-  background-color: #4CAF50; /* Vert */
-}
-
-.category:nth-child(2) {
-  background-color: #FFC0CB; /* Rose */
-}
 
 figure {
   margin: 0;
@@ -35,7 +28,7 @@ figure {
 }
 
 img {
-  width: 60px; /* Ajuste l'image pour tenir dans le rond */
+  width: 90px; /* Ajuste l'image pour tenir dans le rond */
   height: auto;
 }
 
