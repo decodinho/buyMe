@@ -86,8 +86,22 @@
 
            <button class="category" onClick={() => setChoix("laptop")}>
             <figure>
-              <img src="basket2.png" alt="Laptops" width="120" />
+              <img src="electroMen.png" alt="Electro-Menager" width="120" />
               <figcaption>Electro-menager</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="films.png" alt="films" width="120" />
+              <figcaption>films</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="gaming.png" alt="Jeux videos" width="120" />
+              <figcaption>Jeux videos</figcaption>
             </figure>
           </button>
     
@@ -97,6 +111,7 @@
               <figcaption>Phones</figcaption>
             </figure>
           </button><br/><br/>
+          
           <div>
           <h1>Rayon actuel : {choix}</h1>
           <ListeProduits produits={produits} />
