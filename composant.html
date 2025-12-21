@@ -48,20 +48,20 @@
       }, [choix]);
     
       return (
-        <div class="category">
-          <button  onClick={() => setChoix("voiture")}>
+        <div >
+          <button class="category" onClick={() => setChoix("voiture")}>
             <figure>
               <img src="voiture1.png" alt="Voitures" width="100" />
               <figcaption>Voiture</figcaption>
             </figure>
           </button>
     
-          <button onClick={() => setChoix("phones")}>
+          <button class="category" onClick={() => setChoix("phones")}>
             <figure>
               <img src="tel1.png" alt="Téléphones" width="100" />
               <figcaption>Phones</figcaption>
             </figure>
-          </button>
+          </button><br/><br/>
           <div>
           <h1>Rayon actuel : {choix}</h1>
           <ListeProduits produits={produits} />
