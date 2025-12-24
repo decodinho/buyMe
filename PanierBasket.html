@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f8f8f8; display: flex; justify-content: center; padding: 50px; }
+        .cart-container { background: white; width: 400px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h2 { font-weight: 300; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .item { display: flex; align-items: center; margin: 20px 0; }
+        .item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #eee; }
+        .item-info { flex: 1; margin-left: 15px; }
+        .item-name { font-size: 0.9em; font-weight: 600; color: #333; }
+        .item-price { font-size: 0.85em; color: #888; margin-top: 4px; }
+        .total-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9em; }
+        .checkout-btn { width: 100%; background: #1a1a1a; color: white; border: none; padding: 15px; border-radius: 6px; 
+                        cursor: pointer; font-size: 14px; transition: opacity 0.2s; margin-top: 15px; }
+        .checkout-btn:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Mon Panier</h2>
+        <div class="item">
+            <img src="via.placeholder.com" alt="Produit">
+            <div class="item-info">
+                <div class="item-name">Montre Minimaliste Or</div>
+                <div class="item-price">129,00 €</div>
+            </div>
+        </div>
+        <div class="total-section">
+            <div class="total-row"><span>Sous-total</span><span>129,00 €</span></div>
+            <div class="total-row" style="font-weight: 700;"><span>Total</span><span>129,00 €</span></div>
+            <button class="checkout-btn">COMMANDER</button>
+        </div>
+    </div>
+</body>
+</html>
 
