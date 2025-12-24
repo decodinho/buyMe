@@ -29,7 +29,8 @@
     {Object.values(produits).map((produit, index) => (
       <li key={produit.productID || index}>
         {produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}
-      </li>
+      </li><br/>
+      <p>-----------------------------------<p>
     ))}
   </ul>
       );
