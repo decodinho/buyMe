@@ -29,15 +29,15 @@
     {console.log("Nombre de produits :", Object.values(produits).length)}
 
     {Object.values(produits).map((produit, index) => (
-      <li key={produit.productID || index}>
-        {produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}
-      </li><br/>
+      <div key={produit.productID || index}>
+        <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
       <button class="btn-add-to-cart">
         Ajouter au panier
       </button>
       <p>-----------------------------------</p>
     ))}
   </ul>
+    </div>
       );
     }
 
