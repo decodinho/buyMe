@@ -16,6 +16,16 @@
   <div id="root">Chargement...</div>
 
   <script type="text/babel">
+    const { Amplify } = window.aws_amplify;
+
+    Amplify.configure({
+      Auth: {
+        Cognito: {
+          userPoolId: 'us-east-1_Y6RbSWAyM',      // ex: us-east-1_abcd123
+          userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv' // ex: 5fg67h89...
+        }
+      }
+    });
     // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
     const { useState, useEffect } = React;
 
