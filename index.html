@@ -7,48 +7,46 @@
   <title>Application React 2025</title>
   <link rel="stylesheet" href="styleCat.css" />
   <link rel="stylesheet" href="styleBasketBtn.css" />
+  
   <!-- Chargement des scripts (Ordre critique) -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+  <!-- AJOUT INDISPENSABLE : Bibliothèque Amplify -->
+  <script src="cdnjs.cloudflare.com"></script>
+  
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <div id="root">Chargement...</div>
 
   <script type="text/babel">
-    //const { Amplify } = window.aws_amplify;
+    // CORRECTION : Déclaration de la variable depuis l'objet window
+    const { Amplify } = window.aws_amplify;
 
     Amplify.configure({
       Auth: {
         Cognito: {
-          userPoolId: 'us-east-1_Y6RbSWAyM',      // ex: us-east-1_abcd123
-          userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv' // ex: 5fg67h89...
+          userPoolId: 'us-east-1_Y6RbSWAyM',
+          userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv'
         }
       }
     });
-    // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
+
     const { useState, useEffect } = React;
 
-    // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
-       //console.log("Nombre de produits :", produits.length);
       return (
-        //console.log(produits.length);
         <ul>
-    {/* Affichage de la longueur dans la console avant le rendu */}
-    {console.log("Nombre de produits :", Object.values(produits).length)}
-
-    {Object.values(produits).map((produit, index) => (
-      <div key={produit.productID || index}>
-        <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
-      <button class="btn-add-to-cart">
-        Ajouter au panier
-      </button>
-      <p>-----------------------------------</p>
-      </div>
-    ))}
-  </ul>
-    
+          {console.log("Nombre de produits :", Object.values(produits).length)}
+          {Object.values(produits).map((produit, index) => (
+            <div key={produit.productID || index}>
+              <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
+              <button className="btn-add-to-cart">Ajouter au panier</button>
+              <p>-----------------------------------</p>
+            </div>
+          ))}
+        </ul>
       );
     }
 
@@ -57,7 +55,6 @@
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
           .then(data => setProduits(data))
@@ -65,82 +62,28 @@
       }, [choix]);
     
       return (
-        <div >
-          <button class="category" onClick={() => setChoix("voiture")}>
-            <figure>
-              <img src="voiture1.png" alt="Voitures" width="120" />
-              <figcaption>Voitures</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("sac")}>
-            <figure>
-              <img src="sac2.png" alt="Cartables" width="120" />
-              <figcaption>Cartables</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="laptop1.png" alt="Laptops" width="120" />
-              <figcaption>Laptops</figcaption>
-            </figure>
-          </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket1.png" alt="baskets" width="120" />
-              <figcaption>baskets</figcaption>
-            </figure>
-          </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket2.png" alt="Laptops" width="120" />
-              <figcaption>Chaussures Dames</figcaption>
-            </figure>
-          </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="electroMen.png" alt="Electro-Menager" width="120" />
-              <figcaption>Electro-menager</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="films.png" alt="films" width="120" />
-              <figcaption>films</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="gaming.png" alt="Jeux videos" width="120" />
-              <figcaption>Jeux videos</figcaption>
-            </figure>
-          </button>
-    
-          <button class="category" onClick={() => setChoix("phones")}>
-            <figure>
-              <img src="tel1.png" alt="Téléphones" width="120" />
-              <figcaption>Phones</figcaption>
-            </figure>
-          </button><br/><br/>
+        <div>
+          {["voiture", "sac", "laptop", "phones"].map(cat => (
+            <button key={cat} className="category" onClick={() => setChoix(cat)}>
+              <figure>
+                <img src={`${cat}1.png`} alt={cat} width="120" />
+                <figcaption>{cat.toUpperCase()}</figcaption>
+              </figure>
+            </button>
+          ))}
           
           <div>
-          <h1>Rayon actuel : {choix}</h1>
-          <ListeProduits produits={produits} />
+            <h1>Rayon actuel : {choix}</h1>
+            <ListeProduits produits={produits} />
           </div>
         </div>
       );
     }
     
-    // 3. RENDU FINAL (Utilisation correcte de ReactDOM)
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
   </script>
-   <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Connexion</a>
+  <br/>
+  <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Aller à la page de Connexion</a>
 </body>
 </html>
