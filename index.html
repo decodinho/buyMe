@@ -3,47 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
   <title>Application React 2025</title>
   <link rel="stylesheet" href="styleCat.css" />
   <link rel="stylesheet" href="styleBasketBtn.css" />
   
-  <!-- Chargement des scripts (Ordre critique) -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  
-  <!-- AJOUT INDISPENSABLE : Bibliothèque Amplify -->
+  <script src="unpkg.com"></script>
+  <script src="unpkg.com"></script>
   <script src="cdnjs.cloudflare.com"></script>
-  
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="unpkg.com"></script>
 </head>
 <body>
-  <div id="root">Chargement...</div>
+  <div id="root">Chargement du catalogue...</div>
 
   <script type="text/babel">
-    // CORRECTION : Déclaration de la variable depuis l'objet window
-    const { Amplify } = window.aws_amplify;
-
-    Amplify.configure({
-      Auth: {
-        Cognito: {
-          userPoolId: 'us-east-1_Y6RbSWAyM',
-          userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv'
+    // 1. Initialisation sécurisée
+    const initAmplify = () => {
+      try {
+        if (window.aws_amplify) {
+          const { Amplify } = window.aws_amplify;
+          Amplify.configure({
+            Auth: {
+              Cognito: {
+                userPoolId: 'us-east-1_Y6RbSWAyM',
+                userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv'
+              }
+            }
+          });
+          console.log("Amplify configuré avec succès");
         }
+      } catch (e) {
+        console.error("Erreur de configuration Amplify:", e);
       }
-    });
+    };
+
+    initAmplify();
 
     const { useState, useEffect } = React;
 
     function ListeProduits({ produits }) {
+      const produitsArray = Array.isArray(produits) ? produits : Object.values(produits);
+      
       return (
         <ul>
-          {console.log("Nombre de produits :", Object.values(produits).length)}
-          {Object.values(produits).map((produit, index) => (
-            <div key={produit.productID || index}>
-              <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
+          {produitsArray.map((produit, index) => (
+            <div key={produit.productID || index} className="product-item">
+              <li>
+                <strong>{produit.detailArticle || "Article"}</strong><br/>
+                {produit.descrArticle || ""}
+              </li>
               <button className="btn-add-to-cart">Ajouter au panier</button>
-              <p>-----------------------------------</p>
+              <hr/>
             </div>
           ))}
         </ul>
@@ -53,37 +62,42 @@
     function App() {
       const [choix, setChoix] = useState("voiture");
       const [produits, setProduits] = useState([]);
-      
+
       useEffect(() => {
-        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
+        fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com{choix}`)
           .then(res => res.json())
-          .then(data => setProduits(data))
+          .then(data => {
+            const body = typeof data.body === 'string' ? JSON.parse(data.body) : data;
+            setProduits(body);
+          })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
-    
+
       return (
         <div>
-          {["voiture", "sac", "laptop", "phones"].map(cat => (
-            <button key={cat} className="category" onClick={() => setChoix(cat)}>
-              <figure>
-                <img src={`${cat}1.png`} alt={cat} width="120" />
-                <figcaption>{cat.toUpperCase()}</figcaption>
-              </figure>
-            </button>
-          ))}
+          <nav>
+            {["voiture", "sac", "laptop", "phones"].map(cat => (
+              <button key={cat} className="category" onClick={() => setChoix(cat)}>
+                <figure>
+                  <img src={`${cat}1.png`} alt={cat} width="80" />
+                  <figcaption>{cat}</figcaption>
+                </figure>
+              </button>
+            ))}
+          </nav>
           
-          <div>
-            <h1>Rayon actuel : {choix}</h1>
-            <ListeProduits produits={produits} />
-          </div>
+          <h1>Rayon : {choix}</h1>
+          <ListeProduits produits={produits} />
         </div>
       );
     }
-    
+
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
   </script>
-  <br/>
-  <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Aller à la page de Connexion</a>
+
+  <div style="margin-top: 20px; padding: 10px; border-top: 1px solid #ccc;">
+    <a href="connexion.html">Se connecter</a>
+  </div>
 </body>
 </html>
