@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Connexion</title>
 
-  <!-- Inter, sans-serif for a clean modern look -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="styleConnexion.css" />
+
+  <!-- ÉTAPE 1 : Chargement d'Amplify -->
+  <script src="cdnjs.cloudflare.com"></script>
 </head>
 <body>
   <main class="page">
@@ -20,7 +21,8 @@
         <p class="card__subtitle">Connectez-vous pour accéder à votre panier</p>
       </header>
 
-      <form class="form" action="/login" method="post" novalidate>
+      <!-- ÉTAPE 2 : ID ajouté au formulaire pour le JS -->
+      <form id="loginForm" class="form" novalidate>
         <div class="form__group">
           <label for="login" class="form__label">Identifiant</label>
           <input
@@ -28,18 +30,15 @@
             id="login"
             name="login"
             class="form__input"
-            placeholder="ex. prenom.nom"
-            autocomplete="username"
+            placeholder="ex. email@domaine.com"
             required
-            aria-required="true"
           />
-          <p class="form__hint" id="login-hint">Utilisez votre adresse e‑mail ou identifiant.</p>
         </div>
 
         <div class="form__group">
           <div class="form__label-row">
             <label for="password" class="form__label">Mot de passe</label>
-            <a class="form__link" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
+            <a class="form__link" href="#">Mot de passe oublié ?</a>
           </div>
           <input
             type="password"
@@ -47,9 +46,7 @@
             name="password"
             class="form__input"
             placeholder="••••••••"
-            autocomplete="current-password"
             required
-            aria-required="true"
           />
         </div>
 
@@ -59,17 +56,56 @@
             <span class="checkbox__label">Se souvenir de moi</span>
           </label>
 
-          <button type="submit" class="btn btn--primary" aria-label="Se connecter">
+          <button type="submit" id="submitBtn" class="btn btn--primary">
             Se connecter
           </button>
         </div>
       </form>
 
       <footer class="card__footer">
-        <p class="card__alt">Nouveau ici ? <a class="form__link" href="/inscription">Créer un compte</a></p>
+        <p class="card__alt">Nouveau ici ? <a class="form__link" href="#">Créer un compte</a></p>
       </footer>
     </section>
   </main>
+
+  <script>
+    // ÉTAPE 3 : Configuration
+    const { Amplify, Auth } = window.aws_amplify;
+
+    Amplify.configure({
+      Auth: {
+        Cognito: {
+          userPoolId: 'VOTRE_USER_POOL_ID',      // ex: us-east-1_xxxxxx
+          userPoolClientId: 'VOTRE_CLIENT_ID'    // ex: 7u9xxxxxxxxxxx
+        }
+      }
+    });
+
+    // ÉTAPE 4 : Logique de connexion
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Empêche le rechargement de la page
+      
+      const username = document.getElementById('login').value;
+      const password = document.getElementById('password').value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Connexion...";
+
+      try {
+        const user = await Auth.signIn(username, password);
+        console.log("Succès:", user);
+        alert("Connexion réussie !");
+        window.location.href = "index.html"; // Redirection vers l'accueil
+      } catch (error) {
+        console.error("Erreur Cognito:", error);
+        alert("Erreur : " + (error.message || "Identifiants invalides"));
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Se connecter";
+      }
+    });
+  </script>
 </body>
 </html>
-
