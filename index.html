@@ -34,7 +34,7 @@
       <div key={produit.productID || index}
            onClick={() => countViews(produit.productID)} 
            style={{ cursor: 'pointer' }}>
-        <li><strong>{produit.detailArticle || "Article sans detail"}</strong><br/>{produit.descrArticle || " "}</li><br/>
+        <li><strong>{produit.detailArticle || "Article sans detail"}</strong><br/>{produit.descrArticle || " "}</li><br/>{produit.vues || 0}<em>vues</em><br/>
         
         
       <button class="btn-add-to-cart">
