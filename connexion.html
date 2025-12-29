@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion</title>
+
+  <!-- Inter, sans-serif for a clean modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card" aria-labelledby="login-title">
+      <header class="card__header">
+        <h1 id="login-title" class="card__title">Bienvenue</h1>
+        <p class="card__subtitle">Connectez-vous pour accéder à votre panier</p>
+      </header>
+
+      <form class="form" action="/login" method="post" novalidate>
+        <div class="form__group">
+          <label for="login" class="form__label">Identifiant</label>
+          <input
+            type="text"
+            id="login"
+            name="login"
+            class="form__input"
+            placeholder="ex. prenom.nom"
+            autocomplete="username"
+            required
+            aria-required="true"
+          />
+          <p class="form__hint" id="login-hint">Utilisez votre adresse e‑mail ou identifiant.</p>
+        </div>
+
+        <div class="form__group">
+          <div class="form__label-row">
+            <label for="password" class="form__label">Mot de passe</label>
+            <a class="form__link" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
+          </div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form__input"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+            aria-required="true"
+          />
+        </div>
+
+        <div class="form__actions">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" class="checkbox__input" />
+            <span class="checkbox__label">Se souvenir de moi</span>
+          </label>
+
+          <button type="submit" class="btn btn--primary" aria-label="Se connecter">
+            Se connecter
+          </button>
+        </div>
+      </form>
+
+      <footer class="card__footer">
+        <p class="card__alt">Nouveau ici ? <a class="form__link" href="/inscription">Créer un compte</a></p>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
 
