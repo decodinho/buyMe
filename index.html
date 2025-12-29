@@ -11,6 +11,7 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="countViews.js"></script>
 </head>
 <body>
   <div id="root">Chargement...</div>
@@ -30,8 +31,12 @@
     {console.log("Nombre de produits :", Object.values(produits).length)}
 
     {Object.values(produits).map((produit, index) => (
-      <div key={produit.productID || index}>
-        <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
+      <div key={produit.productID || index}
+           onClick={() => countViews(produit.productID)} 
+           style={{ cursor: 'pointer' }}>
+        <li><strong>{produit.detailArticle || "Article sans detail"}</strong><br/>{produit.descrArticle || " "}</li><br/>
+        
+        
       <button class="btn-add-to-cart">
         Ajouter au panier
       </button>
