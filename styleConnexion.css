@@ -15,9 +15,9 @@ html, body {
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   color: rgb(var(--text));
   min-height: 100%;
-  background-image: url("https://copilot.microsoft.com/th/id/BCO.bab5d60d-f710-4fb1-b500-1f255ec662cd.png");
+  background-image: url("7720186.jpg");
   background-size: cover;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
