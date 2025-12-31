@@ -57,6 +57,7 @@
             // Correction de la logique de parsing
             const listeVerifiee = typeof data === 'string' ? JSON.parse(data) : data;
             setProduits(listeVerifiee);
+            console.log(listeVerifiee);
           })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
