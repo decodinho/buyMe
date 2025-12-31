@@ -25,6 +25,7 @@
 
       return (
         <ul>
+          {console.log(Object.values(produits))}
           {produits.map((produit, index) => (
             <div 
               key={produit.productID || index}
@@ -56,8 +57,8 @@
           .then(data => {
             // Correction de la logique de parsing
             const listeVerifiee = typeof data === 'string' ? JSON.parse(data) : data;
-            setProduits(listeVerifiee);
-            console.log(listeVerifiee);
+            setProduits(produits);
+            
           })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
