@@ -30,7 +30,7 @@
     {/* Affichage de la longueur dans la console avant le rendu */}
     {console.log("Nombre de produits :", Object.values(produits))}
 
-    {Object.values(produits).map((produit, index) => (
+    {produits.map((produit, index) => (
       <div key={produit.productID || index}
            onClick={() => countViews(produit.productID)} 
            style={{ cursor: 'pointer' }}>
@@ -57,7 +57,7 @@
         //	https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
-          .then(data => setProduits(data))
+          .then(const listeVerifiee = typeof data === 'string' ? JSON.parse(data) : data;setProduits(listeVerifiee);)
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
     
