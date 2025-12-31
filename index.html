@@ -23,34 +23,32 @@
 
     // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
-
-
-  return (
-    <ul>
-      {produits.map((produit, index) => (
-        <div 
-          key={produit.productID || index}
-          onClick={() => countViews(produit.productID)} 
-          style={{ cursor: 'pointer', marginBottom: '15px' }}
-        >
-          <li>
-            <strong>{produit.detailArticle || "Article sans detail"}</strong>
-            <br/>
-            {produit.descrArticle || " "}
-          </li>
-          {/* Affichage du nombre de vues */}
-          <small>{produit.vues || 0} <em>vues</em></small>
-          <br/>
-          {/* Correction : 'className' au lieu de 'class' pour React */}
-          <button className="btn-add-to-cart">
-            Ajouter au panier
-          </button>
-          <p>-----------------------------------</p>
-        </div>
-      ))}
-    </ul>
-  );
-}
+          return (
+            <ul>
+              {produits.map((produit, index) => (
+                <div 
+                  key={produit.productID || index}
+                  onClick={() => countViews(produit.productID)} 
+                  style={{ cursor: 'pointer', marginBottom: '15px' }}
+                >
+                  <li>
+                    <strong>{produit.detailArticle || "Article sans detail"}</strong>
+                    <br/>
+                    {produit.descrArticle || " "}
+                  </li>
+                  {/* Affichage du nombre de vues */}
+                  <small>{produit.vues || 0} <em>vues</em></small>
+                  <br/>
+                  {/* Correction : 'className' au lieu de 'class' pour React */}
+                  <button className="btn-add-to-cart">
+                    Ajouter au panier
+                  </button>
+                  <p>-----------------------------------</p>
+                </div>
+              ))}
+            </ul>
+          );
+        }
 
 
     function App() {
