@@ -17,130 +17,90 @@
   <div id="root">Chargement...</div>
 
   <script type="text/babel">
-   
-    // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
     const { useState, useEffect } = React;
 
-    // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
-          return (
-            <ul>
-              {produits.map((produit, index) => (
-                <div 
-                  key={produit.productID || index}
-                  onClick={() => countViews(produit.productID)} 
-                  style={{ cursor: 'pointer', marginBottom: '15px' }}
-                >
-                  <li>
-                    <strong>{produit.detailArticle || "Article sans detail"}</strong>
-                    <br/>
-                    {produit.descrArticle || " "}
-                  </li>
-                  {/* Affichage du nombre de vues */}
-                  <small>{produit.vues || 0} <em>vues</em></small>
-                  <br/>
-                  {/* Correction : 'className' au lieu de 'class' pour React */}
-                  <button className="btn-add-to-cart">
-                    Ajouter au panier
-                  </button>
-                  <p>-----------------------------------</p>
-                </div>
-              ))}
-            </ul>
-          );
-        }
+      // Sécurité si produits n'est pas encore chargé
+      if (!Array.isArray(produits)) return <p>Chargement...</p>;
 
+      return (
+        <ul>
+          {produits.map((produit, index) => (
+            <div 
+              key={produit.productID || index}
+              onClick={() => typeof countViews === 'function' && countViews(produit.productID, produit.category)} 
+              style={{ cursor: 'pointer', marginBottom: '15px' }}
+            >
+              <li>
+                <strong>{produit.detailArticle || "Article sans detail"}</strong>
+                <br/>
+                {produit.descrArticle || " "}
+              </li>
+              <small>{produit.vues || 0} <em>vues</em></small>
+              <br/>
+              <button className="btn-add-to-cart">Ajouter au panier</button>
+              <p>-----------------------------------</p>
+            </div>
+          ))}
+        </ul>
+      );
+    }
 
     function App() {
       const [choix, setChoix] = useState("voiture");
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
-        //	https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
-          .then(const listeVerifiee = typeof data === 'string' ? JSON.parse(data) : data;setProduits(listeVerifiee);)
+          .then(data => {
+            // Correction de la logique de parsing
+            const listeVerifiee = typeof data === 'string' ? JSON.parse(data) : data;
+            setProduits(listeVerifiee);
+          })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
     
       return (
-        <div >
-          <button class="category" onClick={() => setChoix("voiture")}>
-            <figure>
-              <img src="voiture1.png" alt="Voitures" width="120" />
-              <figcaption>Voitures</figcaption>
-            </figure>
+        <div>
+          {/* CORRECTION DES ONCLICK : Chaque bouton doit avoir sa propre catégorie */}
+          <button className="category" onClick={() => setChoix("voiture")}>
+            <figure><img src="voiture1.png" alt="Voitures" width="120" /><figcaption>Voitures</figcaption></figure>
           </button>
 
-          <button class="category" onClick={() => setChoix("sac")}>
-            <figure>
-              <img src="sac2.png" alt="Cartables" width="120" />
-              <figcaption>Cartables</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("sac")}>
+            <figure><img src="sac2.png" alt="Cartables" width="120" /><figcaption>Cartables</figcaption></figure>
           </button>
 
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="laptop1.png" alt="Laptops" width="120" />
-              <figcaption>Laptops</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("laptop")}>
+            <figure><img src="laptop1.png" alt="Laptops" width="120" /><figcaption>Laptops</figcaption></figure>
           </button>
 
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket1.png" alt="baskets" width="120" />
-              <figcaption>baskets</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("basket")}>
+            <figure><img src="basket1.png" alt="baskets" width="120" /><figcaption>Baskets</figcaption></figure>
           </button>
 
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket2.png" alt="Laptops" width="120" />
-              <figcaption>Chaussures Dames</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("films")}>
+            <figure><img src="films.png" alt="films" width="120" /><figcaption>Films</figcaption></figure>
           </button>
 
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="electroMen.png" alt="Electro-Menager" width="120" />
-              <figcaption>Electro-menager</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("phones")}>
+            <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
           </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="films.png" alt="films" width="120" />
-              <figcaption>films</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="gaming.png" alt="Jeux videos" width="120" />
-              <figcaption>Jeux videos</figcaption>
-            </figure>
-          </button>
-    
-          <button class="category" onClick={() => setChoix("phones")}>
-            <figure>
-              <img src="tel1.png" alt="Téléphones" width="120" />
-              <figcaption>Phones</figcaption>
-            </figure>
-          </button><br/><br/>
           
+          <br/><br/>
           <div>
-          <h1>Rayon actuel : {choix}</h1>
-          <ListeProduits produits={produits} />
+            <h1>Rayon actuel : {choix}</h1>
+            <ListeProduits produits={produits} />
           </div>
         </div>
       );
     }
     
-    // 3. RENDU FINAL (Utilisation correcte de ReactDOM)
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
-  </script>
+</script>
+
    <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Connexion</a>
 </body>
 </html>
