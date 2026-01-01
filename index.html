@@ -29,7 +29,7 @@
         <ul>
     {/* Affichage de la longueur dans la console avant le rendu */}
     {console.log("Nombre de produits :", Object.values(produits).length)}
-    {console.log(typeof(Object.values(produits)[0]))}
+    {console.log(typeof(Object.values(produits)[1]))}
 
     {Object.values(produits).map((produit, index) => (
       <div key={produit.productID || index}>
