@@ -28,10 +28,10 @@
         //console.log(produits.length);
         <ul>
     {/* Affichage de la longueur dans la console avant le rendu */}
-    {console.log("Nombre de produits :", Object.values(produits).length)}
-    {console.log(typeof(Object.values(produits)[1]))}
+    
+    {const monTableau = JSON.parse(Object.values(produits))}
 
-    {Object.values(produits).map((produit, index) => (
+    {Object.values(monTableau).map((produit, index) => (
       <div key={produit.productID || index}>
         <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
       <button class="btn-add-to-cart">
