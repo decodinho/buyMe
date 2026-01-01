@@ -17,104 +17,123 @@
   <div id="root">Chargement...</div>
 
   <script type="text/babel">
+   
+    // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
     const { useState, useEffect } = React;
 
-    // Composant pour afficher la liste des articles
+    // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
-      // Si produits est une chaîne ou vide, on sécurise
-      const listeVerifiee = Array.isArray(produits) ? produits : [];
-
-      if (listeVerifiee.length === 0) {
-        return <p style={{color: "gray"}}>Aucun produit trouvé pour cette catégorie.</p>;
-      }
-
+       //console.log("Nombre de produits :", produits.length);
       return (
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {listeVerifiee.map((produit, index) => (
-            <div 
-              key={produit.productID || index} 
-              style={{ 
-                borderBottom: "1px solid #ccc", 
-                padding: "15px", 
-                cursor: "pointer" 
-              }}
-              onClick={() => typeof countViews === 'function' && countViews(produit.productID)}>
-              <li>
-                <strong style={{ fontSize: "1.2em" }}>{produit.detailArticle || "Article"}</strong>
-                <br/>
-                <span style={{ color: "#555" }}>{produit.descrArticle || "Pas de description"}</span>
-              </li>
-              <div style={{ marginTop: "10px" }}>
-                <small>🔥 {produit.vues || 0} vues</small>
-              </div>
-              <button className="btn-add-to-cart" style={{ marginTop: "10px" }}>
-                Ajouter au panier
-              </button>
-            </div>
-          ))}
-        </ul>
+        //console.log(produits.length);
+        <ul>
+    {/* Affichage de la longueur dans la console avant le rendu */}
+    {console.log("Nombre de produits :", Object.values(produits).length)}
+
+    {Object.values(produits).map((produit, index) => (
+      <div key={produit.productID || index}>
+        <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
+      <button class="btn-add-to-cart">
+        Ajouter au panier
+      </button>
+      <p>-----------------------------------</p>
+      </div>
+    ))}
+  </ul>
+    
       );
     }
 
     function App() {
       const [choix, setChoix] = useState("voiture");
       const [produits, setProduits] = useState([]);
-      const [loading, setLoading] = useState(false);
-
+      
       useEffect(() => {
-        setLoading(true);
-        fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com{choix}`)
+        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
+        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
-          .then(data => {
-            // OPTION 1 : Décodage manuel si la Lambda renvoie du texte (JSON String)
-            // Si data est une string, on la parse, sinon on garde l'objet
-            const finalData = typeof data === "string" ? JSON.parse(data) : data;
-            
-            console.log("Données reçues et décodées :", finalData);
-            setProduits(finalData);
-            setLoading(false);
-          })
-          .catch(err => {
-            console.error("Erreur API:", err);
-            setLoading(false);
-          });
+          .then(data => setProduits(data))
+          .catch(err => console.error("Erreur API:", err));
       }, [choix]);
-
-      // Fonction utilitaire pour créer les boutons de catégorie
-      const renderBtn = (cat, label, imgSrc) => (
-        <button className="category" onClick={() => setChoix(cat)} style={{ margin: "5px" }}>
-          <figure>
-            <img src={imgSrc} alt={label} width="80" />
-            <figcaption>{label}</figcaption>
-          </figure>
-        </button>
-      );
-
+    
       return (
-        <div>
-          <nav>
-            {renderBtn("voiture", "Voitures", "voiture1.png")}
-            {renderBtn("sac", "Sacs", "sac2.png")}
-            {renderBtn("laptop", "Laptops", "laptop1.png")}
-            {renderBtn("basket", "Baskets", "basket1.png")}
-            {renderBtn("films", "Films", "films.png")}
-            {renderBtn("phones", "Phones", "tel1.png")}
-          </nav>
+        <div >
+          <button class="category" onClick={() => setChoix("voiture")}>
+            <figure>
+              <img src="voiture1.png" alt="Voitures" width="120" />
+              <figcaption>Voitures</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("sac")}>
+            <figure>
+              <img src="sac2.png" alt="Cartables" width="120" />
+              <figcaption>Cartables</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="laptop1.png" alt="Laptops" width="120" />
+              <figcaption>Laptops</figcaption>
+            </figure>
+          </button>
+
+           <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="basket1.png" alt="baskets" width="120" />
+              <figcaption>baskets</figcaption>
+            </figure>
+          </button>
+
+           <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="basket2.png" alt="Laptops" width="120" />
+              <figcaption>Chaussures Dames</figcaption>
+            </figure>
+          </button>
+
+           <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="electroMen.png" alt="Electro-Menager" width="120" />
+              <figcaption>Electro-menager</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="films.png" alt="films" width="120" />
+              <figcaption>films</figcaption>
+            </figure>
+          </button>
+
+          <button class="category" onClick={() => setChoix("laptop")}>
+            <figure>
+              <img src="gaming.png" alt="Jeux videos" width="120" />
+              <figcaption>Jeux videos</figcaption>
+            </figure>
+          </button>
+    
+          <button class="category" onClick={() => setChoix("phones")}>
+            <figure>
+              <img src="tel1.png" alt="Téléphones" width="120" />
+              <figcaption>Phones</figcaption>
+            </figure>
+          </button><br/><br/>
           
-          <hr/>
-          
-          <section>
-            <h1>Rayon : <span style={{color: "blue"}}>{choix.toUpperCase()}</span></h1>
-            {loading ? <p>Chargement en cours...</p> : <ListeProduits produits={produits} />}
-          </section>
+          <div>
+          <h1>Rayon actuel : {choix}</h1>
+          <ListeProduits produits={produits} />
+          </div>
         </div>
       );
     }
-
-    // Rendu final
+    
+    // 3. RENDU FINAL (Utilisation correcte de ReactDOM)
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
-</script>
+  </script>
+
 
    <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Connexion</a>
 </body>
