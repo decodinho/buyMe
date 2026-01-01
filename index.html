@@ -29,7 +29,7 @@
         <ul>
     {/* Affichage de la longueur dans la console avant le rendu */}
     
-    {const monTableau = JSON.parse(Object.values(produits))}
+    {const monTableau = JSON.parse(produits)}
 
     {Object.values(monTableau).map((produit, index) => (
       <div key={produit.productID || index}>
