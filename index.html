@@ -38,8 +38,7 @@
                 padding: "15px", 
                 cursor: "pointer" 
               }}
-              onClick={() => typeof countViews === 'function' && countViews(produit.productID)}
-            >
+              onClick={() => typeof countViews === 'function' && countViews(produit.productID)}>
               <li>
                 <strong style={{ fontSize: "1.2em" }}>{produit.detailArticle || "Article"}</strong>
                 <br/>
