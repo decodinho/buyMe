@@ -17,31 +17,30 @@
   <div id="root">Chargement...</div>
 
   <script type="text/babel">
-   
-    // 1. EXTRACTION DES HOOKS (Ne pas utiliser 'import' ici)
     const { useState, useEffect } = React;
 
-    // 2. COMPOSANT ENFANT (Manquant dans votre code)
     function ListeProduits({ produits }) {
-       //console.log("Nombre de produits :", produits.length);
-      return (
-        //console.log(produits.length);
-        <ul>
-          {console.log(Object.values(produits))}
-          {console.log(typeof(Object.values(produits)))}
-    
+      // Sécurité 2026 : On s'assure que produits est un tableau exploitable
+      const listeArticles = Array.isArray(produits) ? produits : [];
+      
+      if (listeArticles.length === 0) return <p>Aucun produit trouvé ou chargement...</p>;
 
-    {Object.values(produits).map((produit, index) => (
-      <div key={produit.productID || index}>
-        <li>{produit.detailArticle || "Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
-      <button class="btn-add-to-cart">
-        Ajouter au panier
-      </button>
-      <p>-----------------------------------</p>
-      </div>
-    ))}
-  </ul>
-    
+      return (
+        <ul>
+          {listeArticles.map((produit, index) => (
+            <div key={produit.productID || index} style={{ marginBottom: "20px" }}>
+              <li>
+                <strong>{produit.detailArticle || "Article"}</strong>
+                <br/>
+                {produit.descrArticle || ""}
+              </li>
+              <small>{produit.vues || 0} vues</small>
+              <br/>
+              <button className="btn-add-to-cart">Ajouter au panier</button>
+              <p>-----------------------------------</p>
+            </div>
+          ))}
+        </ul>
       );
     }
 
@@ -50,90 +49,50 @@
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
           .then(res => res.json())
-          .then(data => setProduits(data))
+          .then(data => {
+            // CORRECTION CRUCIALE : Si data est une String (à cause du json.dumps Lambda), on la parse
+            const finalData = typeof data === "string" ? JSON.parse(data) : data;
+            setProduits(finalData);
+          })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
     
       return (
-        <div >
-          <button class="category" onClick={() => setChoix("voiture")}>
-            <figure>
-              <img src="voiture1.png" alt="Voitures" width="120" />
-              <figcaption>Voitures</figcaption>
-            </figure>
+        <div>
+          {/* Correction : Chaque bouton doit mettre à jour sa catégorie spécifique */}
+          <button className="category" onClick={() => setChoix("voiture")}>
+            <figure><img src="voiture1.png" width="120" /><figcaption>Voitures</figcaption></figure>
           </button>
-
-          <button class="category" onClick={() => setChoix("sac")}>
-            <figure>
-              <img src="sac2.png" alt="Cartables" width="120" />
-              <figcaption>Cartables</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("sac")}>
+            <figure><img src="sac2.png" width="120" /><figcaption>Sacs</figcaption></figure>
           </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="laptop1.png" alt="Laptops" width="120" />
-              <figcaption>Laptops</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("laptop")}>
+            <figure><img src="laptop1.png" width="120" /><figcaption>Laptops</figcaption></figure>
           </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket1.png" alt="baskets" width="120" />
-              <figcaption>baskets</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("basket")}>
+            <figure><img src="basket1.png" width="120" /><figcaption>Baskets</figcaption></figure>
           </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="basket2.png" alt="Laptops" width="120" />
-              <figcaption>Chaussures Dames</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("films")}>
+            <figure><img src="films.png" width="120" /><figcaption>Films</figcaption></figure>
           </button>
-
-           <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="electroMen.png" alt="Electro-Menager" width="120" />
-              <figcaption>Electro-menager</figcaption>
-            </figure>
+          <button className="category" onClick={() => setChoix("phones")}>
+            <figure><img src="tel1.png" width="120" /><figcaption>Phones</figcaption></figure>
           </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="films.png" alt="films" width="120" />
-              <figcaption>films</figcaption>
-            </figure>
-          </button>
-
-          <button class="category" onClick={() => setChoix("laptop")}>
-            <figure>
-              <img src="gaming.png" alt="Jeux videos" width="120" />
-              <figcaption>Jeux videos</figcaption>
-            </figure>
-          </button>
-    
-          <button class="category" onClick={() => setChoix("phones")}>
-            <figure>
-              <img src="tel1.png" alt="Téléphones" width="120" />
-              <figcaption>Phones</figcaption>
-            </figure>
-          </button><br/><br/>
           
+          <br/><br/>
           <div>
-          <h1>Rayon actuel : {choix}</h1>
-          <ListeProduits produits={produits} />
+            <h1>Rayon actuel : {choix}</h1>
+            <ListeProduits produits={produits} />
           </div>
         </div>
       );
     }
     
-    // 3. RENDU FINAL (Utilisation correcte de ReactDOM)
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
-  </script>
+</script>
 
    <a href="connexion.html" title="Visiter le site" target="_blank" rel="noopener">Connexion</a>
 </body>
