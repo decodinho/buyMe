@@ -44,32 +44,43 @@ t<!DOCTYPE html>
       );
     }
 
-    function App() {
-      const [choix, setChoix] = useState("voiture");
-      const [produits, setProduits] = useState([]);
-      
-      useEffect(() => {
-        console.log("--- NOUVELLE REQUÊTE ---");
-        console.log("Catégorie demandée :", choix);
+  function App() {
+  const [choix, setChoix] = useState("voiture");
+  const [produits, setProduits] = useState([]);
+  
+  useEffect(() => {
+    console.log("--- NOUVELLE REQUÊTE 2026 ---");
+    console.log("Catégorie demandée :", choix);
 
-        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
-          .then(res => res.json())
-          .then(data => {
-            // 1. VOIR LA DONNÉE BRUTE (C'est souvent une String à cause de votre Lambda)
-            console.log("Donnée reçue (data) :", Object.values(data)[0]);
-            console.log("Type de data :", typeof data);
+    fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
+      .then(res => {
+        // Sécurité : On vérifie si l'API Gateway renvoie une erreur 500
+        if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        // 1. DÉCODER : Si Lambda a utilisé json.dumps, data est une String.
+        // Sinon (API HTTP), data est déjà un Tableau.
+        const listeFinale = typeof data === 'string' ? JSON.parse(data) : data;
 
-            // 2. DÉCODER SI C'EST UNE STRING
-            const listeFinale = typeof data === 'string' ? JSON.parse(data) : data;
-            
-            // 3. VOIR LA DONNÉE DECODÉE (Doit être un Array/Tableau)
-            console.log("Donnée après parsing (listeFinale) :", listeFinale);
-            console.log("Est-ce un tableau ? :", Array.isArray(listeFinale));
+        // 2. LOGS DE VÉRIFICATION
+        console.log("Donnée brute reçue :", data);
+        console.log("Type de data :", typeof data);
+        console.log("Tableau final décodé :", listeFinale);
+        console.log("Nombre d'articles :", Array.isArray(listeFinale) ? listeFinale.length : "0");
 
-            setProduits(listeFinale);
-          })
-          .catch(err => console.error("Erreur API :", err));
-      }, [choix]);
+        // 3. MISE À JOUR : On s'assure d'envoyer un tableau pour éviter de casser le .map()
+        setProduits(Array.isArray(listeFinale) ? listeFinale : []);
+      })
+      .catch(err => {
+        console.error("Erreur API :", err);
+        setProduits([]); // On vide la liste en cas d'erreur
+      });
+  }, [choix]);
+
+  // ... reste du composant
+}
+
 
     
       return (
