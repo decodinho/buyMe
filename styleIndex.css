@@ -107,15 +107,5 @@ ul {
 }
 
 /* Style de l'élément de liste (La carte produit) */
-ul li {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  cursor: pointer;
-  display: block; /* Force le li à prendre toute la largeur */
-}
+
 
