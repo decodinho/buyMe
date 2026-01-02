@@ -22,7 +22,7 @@
     const { useState, useEffect } = React;
 
     // 2. COMPOSANT ENFANT (Manquant dans votre code)
-    function ListeProduits({ produits }) {
+    function ListeProduits({ produits}) {
        //console.log("Nombre de produits :", produits.length);
       return (
         //console.log(produits.length);
@@ -30,7 +30,7 @@
     {/* Affichage de la longueur dans la console avant le rendu */}
     
 
-    {Object.values(produits).map((produit, index) => (
+    {produits.map((produit, index) => (
       <div key={produit.productID || index}>
         <li>{produit.detailArticle || " Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
       <button class="btn-add-to-cart">
