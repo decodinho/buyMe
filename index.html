@@ -51,24 +51,27 @@
 
 
   function App() {
-      const [choix, setChoix] = useState("voiture");
-      const [produits, setProduits] = useState([]);
-      
-      useEffect(() => {
-        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
-            .then(res => res.json()) 
-            .then(data => {
-              // ÉTAPE CLÉ : On décompose la chaîne si c'est du texte
-              const articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
-              console.log("Type après transformation :", typeof articlesVrais);
-              console.log("Est-ce un tableau ? :", Array.isArray(articlesVrais));
+  const [choix, setChoix] = useState("voiture");
+  const [produits, setProduits] = useState([]);
 
-              
-              console.log("Liste décomposée :", articlesVrais);
-              setProduits(articlesVrais); // On stocke le tableau final
-            })
-            .catch(err => console.error("Erreur :", err));
-        }, [choix]);
+  useEffect(() => {
+    fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
+      .then(res => res.json())
+      .then(data => {
+        let articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
+
+        // CORRECTION : Si c'est un objet seul, on le met dans un tableau
+        if (articlesVrais && !Array.isArray(articlesVrais)) {
+          console.log("Transformation de l'objet unique en tableau");
+          articlesVrais = [articlesVrais];
+        }
+
+        console.log("Résultat final (doit être true) :", Array.isArray(articlesVrais));
+        setProduits(articlesVrais);
+      })
+      .catch(err => console.error("Erreur :", err));
+  }, [choix]);
+
 
       return (
         <div>
