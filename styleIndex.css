@@ -97,15 +97,5 @@ body {
   }
 }
 
-/* Conteneur de la liste */
-ul {
-  list-style: none;
-  padding: 0;
-  max-width: 800px;
-  margin: 20px auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Style de l'élément de liste (La carte produit) */
 
 
