@@ -60,6 +60,9 @@
             .then(data => {
               // ÉTAPE CLÉ : On décompose la chaîne si c'est du texte
               const articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
+              console.log("Type après transformation :", typeof articlesVrais);
+              console.log("Est-ce un tableau ? :", Array.isArray(articlesVrais));
+
               
               console.log("Liste décomposée :", articlesVrais);
               setProduits(articlesVrais); // On stocke le tableau final
