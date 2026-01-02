@@ -39,7 +39,7 @@
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-          fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
+          const res = fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category={choix}`)
             .then(res => res.json()) 
             .then(data => {
               // ÉTAPE CLÉ : On décompose la chaîne si c'est du texte
