@@ -56,7 +56,7 @@
           .then(res => res.json())
           .then(data => {
             // 1. VOIR LA DONNÉE BRUTE (C'est souvent une String à cause de votre Lambda)
-            console.log("Donnée reçue (data) :", data['detailArticle']);
+            console.log("Donnée reçue (data) :", data['category']);
             console.log("Type de data :", typeof data);
 
             // 2. DÉCODER SI C'EST UNE STRING
