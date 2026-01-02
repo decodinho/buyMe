@@ -18,23 +18,37 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    function ListeProduits({ produits }) {
-      // On vérifie que la décomposition a bien produit un tableau
+  function ListeProduits({ produits }) {
+  // 1. Décomposition automatique si c'est une String
+      let listeArticles = produits;
+      
       if (typeof produits === 'string') {
-          console.log("merci");
+        console.log("merci : conversion de la string en tableau effectuée");
+        try {
+          listeArticles = JSON.parse(produits);
+        } catch (e) {
+          console.error("Erreur de parsing JSON", e);
+          listeArticles = [];
         }
+      }
+    
+      // 2. Sécurité : on vérifie qu'on a bien un tableau pour éviter le crash du .map()
+      if (!Array.isArray(listeArticles)) {
+        return <p>Chargement ou format de données invalide...</p>;
+      }
     
       return (
         <ul>
-          {produits.map((p) => (
-            <li key={p.productID}>
-              <strong>{p.detailArticle}</strong> - {p.vues} vues
-              <p>{p.descrArticle}</p>
+          {listeArticles.map((p, index) => (
+            <li key={p.productID || index}>
+              <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
+              <p>{p.descrArticle || "Pas de description"}</p>
             </li>
           ))}
         </ul>
       );
     }
+
 
   function App() {
       const [choix, setChoix] = useState("voiture");
