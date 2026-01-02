@@ -119,35 +119,3 @@ ul li {
   display: block; /* Force le li à prendre toute la largeur */
 }
 
-/* Effet au survol (Style Amazon 2026) */
-ul li:hover {
-  border-color: #007185;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
-}
-
-/* Titre de l'article */
-ul li strong {
-  color: #007185;
-  font-size: 1.25rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-/* Description de l'article */
-ul li p {
-  color: #444;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin: 10px 0 0 0;
-}
-
-/* Badge du nombre de vues */
-ul li span.vues-badge {
-  font-size: 0.85rem;
-  color: #767676;
-  background: #f0f2f2;
-  padding: 3px 8px;
-  border-radius: 4px;
-}
-
