@@ -38,15 +38,20 @@
       }
     
       return (
-        {console.log(listeArticles.length);}
-        <ul>
-          {Object.values(listeArticles).map((p, index) => (
-            <li key={p.productID || index}>
-              <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
-              <p>{p.descrArticle || "Pas de description"}</p>
-            </li>
-          ))}
-        </ul>
+        <>
+          {/* En React, le log doit être entre accolades dans le JSX */}
+          {console.log("Nombre d'articles :", listeArticles.length)}
+          
+          <ul>
+            {/* On utilise directement .map() car listeArticles est un tableau */}
+            {listeArticles.map((p, index) => (
+              <li key={p.productID || index}>
+                <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
+                <p>{p.descrArticle || "Pas de description"}</p>
+              </li>
+            ))}
+          </ul>
+        </>
       );
     }
 
