@@ -19,53 +19,37 @@
     const { useState, useEffect } = React;
 
     function ListeProduits({ produits }) {
-      // Sécurité : si produits n'est pas un tableau, on ne tente pas de mapper
-      if (!Array.isArray(produits) || produits.length === 0) {
-        return <p>Aucun article trouvé dans cette catégorie.</p>;
-      }
-
+      // On vérifie que la décomposition a bien produit un tableau
+      if (!Array.isArray(produits)) return <p>Chargement...</p>;
+    
       return (
         <ul>
-          {produits.map((produit, index) => (
-            <div key={produit.productID || index} 
-                 onClick={() => typeof countViews === 'function' && countViews(produit.productID)}
-                 style={{ cursor: 'pointer', marginBottom: '20px' }}>
-              <li>
-                <strong>{produit.detailArticle || "Article sans detail"}</strong>
-                <br/>
-                {produit.descrArticle || " "}
-              </li>
-              <small>{produit.vues || 0} vues</small>
-              <br/>
-              <button className="btn-add-to-cart">Ajouter au panier</button>
-              <p>-----------------------------------</p>
-            </div>
+          {produits.map((p) => (
+            <li key={p.productID}>
+              <strong>{p.detailArticle}</strong> - {p.vues} vues
+              <p>{p.descrArticle}</p>
+            </li>
           ))}
         </ul>
       );
     }
 
-    function App() {
+  function App() {
       const [choix, setChoix] = useState("voiture");
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-        console.log("--- REQUÊTE 2026 --- Catégorie :", choix);
-        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
-          .then(res => {
-            if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
-            return res.json();
-          })
-          .then(data => {
-            // Décodage si la Lambda renvoie une chaîne JSON (String)
-            const listeFinale = typeof data === 'string' ? JSON.parse(data) : data;
-            setProduits(Array.isArray(listeFinale) ? listeFinale : []);
-          })
-          .catch(err => {
-            console.error("Erreur API :", err);
-            setProduits([]);
-          });
-      }, [choix]);
+          fetch(`l1upgx0w59.execute-api.us-east-1.amazonaws.com{choix}`)
+            .then(res => res.json()) 
+            .then(data => {
+              // ÉTAPE CLÉ : On décompose la chaîne si c'est du texte
+              const articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
+              
+              console.log("Liste décomposée :", articlesVrais);
+              setProduits(articlesVrais); // On stocke le tableau final
+            })
+            .catch(err => console.error("Erreur :", err));
+        }, [choix]);
 
       return (
         <div>
