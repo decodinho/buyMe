@@ -20,7 +20,9 @@
 
     function ListeProduits({ produits }) {
       // On vérifie que la décomposition a bien produit un tableau
-      if (!Array.isArray(produits)) return <p>Chargement...</p>;
+      if (typeof produits === 'string') {
+          return <p>Données reçues en texte brut : {produits.substring(0, 50)}...</p>;
+        }
     
       return (
         <ul>
