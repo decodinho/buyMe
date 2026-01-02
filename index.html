@@ -39,7 +39,7 @@
     
       return (
         <ul>
-          {listeArticles.map((p, index) => (
+          {Object.values(listeArticles).map((p, index) => (
             <li key={p.productID || index}>
               <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
               <p>{p.descrArticle || "Pas de description"}</p>
