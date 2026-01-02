@@ -106,7 +106,7 @@ ul {
 }
 
 /* Chaque bloc de produit (votre div parente) */
-li{
+li {
   display: flex;
   flex-direction: column;
   background-color: #fff;
