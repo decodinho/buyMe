@@ -32,7 +32,7 @@
 
     {Object.values(produits).map((produit, index) => (
       <div key={produit.productID || index}>
-        <li>{produit.detailArticle || " "}<br/>{produit.descrArticle || " "}</li><br/>
+        <li>{produit.detailArticle || " Article sans detail"}<br/>{produit.descrArticle || " "}</li><br/>
       <button class="btn-add-to-cart">
         Ajouter au panier
       </button>
@@ -49,12 +49,21 @@
       const [produits, setProduits] = useState([]);
       
       useEffect(() => {
-        // CORRECTION : Utilisation des backticks (`) et du symbole $ pour l'URL dynamique
         fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
-          .then(res => res.json())
-          .then(data => setProduits(data))
+          .then(res => {
+            if (!res.ok) throw new Error("Erreur réseau");
+            return res.json(); // Premier décodage (flux HTTP vers JSON)
+          })
+          .then(data => {
+            // DEUXIÈME DÉCODAGE : Si Lambda a renvoyé une chaîne dans le body
+            const listeArticles = typeof data === 'string' ? JSON.parse(data) : data;
+            
+            console.log("Données reçues :", listeArticles);
+            setProduits(listeArticles);
+          })
           .catch(err => console.error("Erreur API:", err));
       }, [choix]);
+
     
       return (
         <div >
