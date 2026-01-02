@@ -38,6 +38,7 @@
       }
     
       return (
+        {console.log(listeArticles.length);}
         <ul>
           {Object.values(listeArticles).map((p, index) => (
             <li key={p.productID || index}>
