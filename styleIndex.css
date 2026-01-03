@@ -96,7 +96,6 @@ body {
     grid-template-columns: 1fr;
   }
 }
-
   .amazon-btn-add-to-cart {
     background: #ffd814;
     border: 1px solid #a88734;
@@ -113,3 +112,5 @@ body {
     background: #f7ca00;
     border-color: #a88734;
   }
+
+
