@@ -182,7 +182,7 @@ body {
 }
 
 /* Style de base du bouton Amazon */
-.cart {
+.amazon-btn-add-to-cart {
     /* Couleurs principales */
     background: #ffd814; /* Jaune standard */
     background-image: linear-gradient(to bottom, #f7dfa5, #f0c14b); /* Subtil dégradé pour la profondeur */
@@ -205,7 +205,7 @@ body {
     box-sizing: border-box;
 }
 
-.cart {
+.amazon-btn-add-to-cart{
     /* Couleurs principales */
     background: #ffd814; /* Jaune standard */
     background-image: linear-gradient(to bottom, #f7dfa5, #f0c14b); /* Subtil dégradé pour la profondeur */
@@ -229,14 +229,14 @@ body {
 }
 
 /* Effet au survol (hover) */
-.cart:hover {
+.amazon-btn-add-to-cart:hover {
     background: #f7ca00; /* Jaune légèrement plus foncé au survol */
     background-image: linear-gradient(to bottom, #f7d794, #f0b848);
     border-color: #a88734;
 }
 
 /* Effet au clic (active) */
-.cart:active {
+.amazon-btn-add-to-cart:active {
     background: #e0b431;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 2px #f0c14b;
 }
