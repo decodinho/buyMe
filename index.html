@@ -48,9 +48,8 @@
             {listeArticles.map((p, index) => (
               <li className="amazon-item" key={p.productID || index}>
                 <img src={p.image} style={{ width: '280px', height: '280px', minWidth: '280px', minHeight: '280px', objectFit: 'contain'}}/>
-                <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
-                <strong onClick={() => countViews(p.productID)} style={{ cursor: 'pointer', color: '#007185' }}>
-                <p>{p.descrArticle || "Pas de description"}</p>
+                <strong>{p.vues || 0} vues</strong>
+                <strong onClick={() => countViews(p.productID)}>{p.detailArticle || "Sans titre"}</strong>
                 <button style={{ backgroundColor: '#ffd814', borderRadius: '20px', padding: '10px' }}>
                   Ajouter au panier
                 </button>
