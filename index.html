@@ -44,9 +44,11 @@
           
           <ul>
             {/* On utilise directement .map() car listeArticles est un tableau */}
+           
             {listeArticles.map((p, index) => (
               <li key={p.productID || index}>
-                <img src="basket1.png" width="250" height="250"><strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
+                <img src="basket1.png" alt="Produit" width="250" height="250" />
+                <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
                 <p>{p.descrArticle || "Pas de description"}</p>
               </li>
             ))}
