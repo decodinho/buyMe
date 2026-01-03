@@ -46,7 +46,7 @@
             {/* On utilise directement .map() car listeArticles est un tableau */}
            
             {listeArticles.map((p, index) => (
-              <li key={p.productID || index}>
+              <li className="amazon-item" key={p.productID || index}>
                 <img src={p.image} style={{ width: '280px', height: '280px', minWidth: '280px', minHeight: '280px', objectFit: 'contain'}}/>
                 <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
                 <p>{p.descrArticle || "Pas de description"}</p>
