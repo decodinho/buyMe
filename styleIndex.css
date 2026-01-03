@@ -97,19 +97,4 @@ body {
   }
 }
 
-.amazon-btn-add-to-cart {
-    background: #ffd814;
-    border: 1px solid #a88734;
-    border-radius: 20px;
-    color: #111;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: 0 2px 5px 0 rgba(213,217,217,.5);
-  }
 
-  .amazon-btn-add-to-cart:hover {
-    background: #f7ca00;
-    border-color: #a88734;
-  }
