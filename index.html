@@ -38,29 +38,22 @@
       }
     
       return (
-          <div className="amazon-container">
-              <ul className="amazon-list">
-                {listeArticles.map((p, index) => (
-                  <li key={p.productID || index} className="amazon-item" onClick={() => countViews(p.productID)}>
-                    {/* Bloc Image */}
-                    <div className="image-wrapper">
-                      <img src={p.image.replace(/"/g, '')} alt={p.detailArticle} />
-                    </div>
+          <>
+          {/* En React, le log doit être entre accolades dans le JSX */}
+          {/*console.log(" articles :", Object.keys(listeArticles[0]))*/}
           
-                    {/* Bloc Texte */}
-                    <div className="content-wrapper">
-                      <strong className="product-title">{p.detailArticle || "Sans titre"}</strong>
-                      <div className="product-meta">
-                        <span className="stars">★★★★☆</span> 
-                        <span className="views-count">{p.vues || 0} vues</span>
-                      </div>
-                      <p className="product-description">{p.descrArticle || "Pas de description"}</p>
-                      <button className="amazon-btn">Ajouter au panier</button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-          </div>
+          <ul>
+            {/* On utilise directement .map() car listeArticles est un tableau */}
+           
+            {listeArticles.map((p, index) => (
+              <li key={p.productID || index}>
+                <img src={p.image} style={{ width: '500px', height: '500px', minWidth: '500px', minHeight: '500px', objectFit: 'contain'}}/>
+                <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
+                <p>{p.descrArticle || "Pas de description"}</p>
+              </li>
+            ))}
+          </ul>
+        </>
       );
     }
 
