@@ -181,17 +181,62 @@ body {
   overflow: hidden;
 }
 
-/* Bouton Amazon Jaune */
-.amazon-btn {
-  background: #ffd814;
-  border: 1px solid #fcd200;
-  border-radius: 20px;
-  padding: 8px 16px;
-  width: fit-content;
-  cursor: pointer;
-  font-size: 0.9rem;
+/* Style de base du bouton Amazon */
+.cart {
+    /* Couleurs principales */
+    background: #ffd814; /* Jaune standard */
+    background-image: linear-gradient(to bottom, #f7dfa5, #f0c14b); /* Subtil dégradé pour la profondeur */
+    border: 1px solid #a88734; /* Bordure discrète */
+    
+    /* Typographie et espacement */
+    color: #111;
+    font-size: 13px;
+    line-height: 1;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    
+    /* Forme et coins */
+    border-radius: 20px; /* Coins arrondis caractéristiques */
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset; /* Petite ombre interne */
+    
+    /* Assure que le bouton ne dépasse pas */
+    box-sizing: border-box;
 }
 
-.amazon-btn:hover { background: #f7ca00; }
+.cart {
+    /* Couleurs principales */
+    background: #ffd814; /* Jaune standard */
+    background-image: linear-gradient(to bottom, #f7dfa5, #f0c14b); /* Subtil dégradé pour la profondeur */
+    border: 1px solid #a88734; /* Bordure discrète */
+    
+    /* Typographie et espacement */
+    color: #111;
+    font-size: 13px;
+    line-height: 1;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    
+    /* Forme et coins */
+    border-radius: 20px; /* Coins arrondis caractéristiques */
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset; /* Petite ombre interne */
+    
+    /* Assure que le bouton ne dépasse pas */
+    box-sizing: border-box;
+}
 
+/* Effet au survol (hover) */
+.cart:hover {
+    background: #f7ca00; /* Jaune légèrement plus foncé au survol */
+    background-image: linear-gradient(to bottom, #f7d794, #f0b848);
+    border-color: #a88734;
+}
 
+/* Effet au clic (active) */
+.cart:active {
+    background: #e0b431;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 2px #f0c14b;
+}
