@@ -47,7 +47,7 @@
            
             {listeArticles.map((p, index) => (
               <li key={p.productID || index}>
-                <img src={p.image} width="250" height="250" />
+                <img src={p.image} width="500" height="500" />
                 <strong>{p.detailArticle || "Sans titre"}</strong> - {p.vues || 0} vues
                 <p>{p.descrArticle || "Pas de description"}</p>
               </li>
