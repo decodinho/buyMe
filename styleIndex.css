@@ -141,7 +141,9 @@ body {
   border: 1px solid #e0e0e0; /* Bordure grise discrète */
   border-radius: 8px;        /* Arrondit les coins de l'image */
   padding: 5px;              /* Espace entre l'image et la bordure */
-  background-color: gray; 
+  background-color: #F8F9FA;
+  mix-blend-mode: multiply; /* Rend le blanc de l'image transparent par rapport au fond de la page */
+  filter: contrast(1.1);
 }
 
 /* Conteneur Infos */
