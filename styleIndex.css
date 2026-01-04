@@ -19,11 +19,13 @@ html, body {
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  line-height: 1.5;
+    background-color: #F7F8FA; 
+    
+    /* Couleur de texte principale (Gris Anthracite pour la lisibilité) */
+    color: #1A1A1A;
+    
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
 .header {
