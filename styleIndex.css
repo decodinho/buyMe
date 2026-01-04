@@ -122,8 +122,8 @@ body {
 
 /* Conteneur Image */
 .image-container {
-  flex: 0 0 280px;
-  height: 280px;
+  flex: 0 0 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,8 +131,10 @@ body {
 }
 
 .image-container img {
-  max-width: 280 px;
-  max-height: 280 px;
+  width: 300px;
+  height: 300px;
+  min-width: 300px;
+  min-height: 300px;
   object-fit: contain;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
   transition: transform 0.3s ease;
