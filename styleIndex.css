@@ -139,7 +139,7 @@ body {
   border: 1px solid #e0e0e0; /* Bordure grise discrète */
   border-radius: 8px;        /* Arrondit les coins de l'image */
   padding: 5px;              /* Espace entre l'image et la bordure */
-  background-color: #fff; 
+  background-color: gray; 
 }
 
 /* Conteneur Infos */
