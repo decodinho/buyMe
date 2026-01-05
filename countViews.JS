@@ -1,6 +1,6 @@
 // countViews.js
 // On attache la fonction à window pour qu'elle soit visible par React
-window.countViews = async function(productID) {
+window.countViews = async function(productID,category) {
   if (!productID) return;
 
   try {
@@ -8,7 +8,7 @@ window.countViews = async function(productID) {
     const response = await fetch('https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/view', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productID: productID }),
+      body: JSON.stringify({ productID: productID,category: }),
       keepalive: true 
     });
 
