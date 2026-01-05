@@ -205,3 +205,13 @@ body {
   background: #4a148c;
   transform: scale(1.05);
 }
+
+.clignotement {
+  animation: blinker 1.5s linear infinite;
+  color: #6a1b9a; /* Votre violet premium */
+  font-weight: bold;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
