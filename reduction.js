@@ -2,7 +2,7 @@ window.reduction = async function(prix,redux) {
   
   try {
     // CORRECTION : Ajout de https:// obligatoire
-    let prixFinal = prix(1-(redux)/100)
+    let prixFinal = prix*(1-(redux)/100)
     return prixFinal
   } catch (err) {
     console.error("pas de prix :", err);
