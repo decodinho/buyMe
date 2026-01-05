@@ -1,4 +1,4 @@
-window.reduction = async function(prix,redux) {
+window.reduction = function(prix,redux) {
   
   try {
     // CORRECTION : Ajout de https:// obligatoire
