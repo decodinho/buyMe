@@ -58,10 +58,13 @@
                         {p.detailArticle || "Sans titre"}
                       </strong>
 
-                      <strong>
-                        <h6><s>{p.prix}$</s></h6>
-                        <h3>{reduction(p.prix,p.reduction)}$</h3><span className="clignotement">OFFRE LIMITÉE !</span>
-                      </strong>
+                      
+                        <div className="old-price-wrapper">
+                          <s className="text-muted">{p.prix}$</s>
+                        </div>
+                        <h3>{reduction(p.prix,p.reduction)}$</h3>
+                        <span className="clignotement">OFFRE LIMITÉE !</span>
+                    
                       
                       <div className="rating">
                         <span className="stars">★★★★☆</span>
