@@ -57,9 +57,9 @@
                         {p.detailArticle || "Sans titre"}
                       </strong>
 
-                      <strong className="product-title">
-                        <h6><s>{p.prix}</s></h6>
-                        <h3><span>{p.prix-(p.prix*p.reduction)/100}$</span></h3>
+                      <strong>
+                        <h6><s>{p.prix}$</s></h6>
+                        <h3><span>{p.prix-(p.prix*p.reduction)/100}$</span></h3><span className="clignotement">OFFRE LIMITÉE !</span>
                       </strong>
                       
                       <div className="rating">
