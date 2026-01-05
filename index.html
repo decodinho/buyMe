@@ -47,7 +47,7 @@
                 {listeArticles.map((p, index) => (
                   <li className="purple-item" key={p.productID || index}>
                     {/* Zone Image */}
-                    <div className="image-container" onClick={() => countViews(p.productID)}>
+                    <div className="image-container" onClick={() => countViews(p.productID,p.category)}>
                       <img src={p.image} alt={p.detailArticle}/>
                     </div>
               
