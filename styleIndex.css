@@ -216,20 +216,24 @@ body {
   50% { opacity: 0; }
 }
 
-/* Container du Logo */
 .header-container {
   display: flex;
   align-items: center;
-  padding: 15px 30px;
-  background-color: white;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 20px;
+  justify-content: flex-start; /* Aligne tout à gauche */
+  padding: 10px 20px;
+  background-color: var(--card-bg); /* Utilise votre gris très sombre #171a21 */
+  border-bottom: 1px solid var(--card-border);
+  width: 100%;
 }
 
 .logo-buyme {
-  height: 50px; /* Taille élégante pour un logo type Udemy */
-  cursor: pointer;
+  height: 50px;
+  width: auto;
+  display: block; /* Évite les décalages invisibles */
+  object-fit: contain;
 }
+
+
 
 /* On décale un peu le titre du rayon pour l'équilibre visuel */
 h1 {
