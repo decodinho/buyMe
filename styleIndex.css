@@ -216,29 +216,4 @@ body {
   50% { opacity: 0; }
 }
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Aligne tout à gauche */
-  padding: 10px 20px;
-  background-color: var(--card-bg); /* Utilise votre gris très sombre #171a21 */
-  border-bottom: 1px solid var(--card-border);
-  width: 100%;
-}
-
-.logo-buyme {
-  height: 50px;
-  width: auto;
-  display: block; /* Évite les décalages invisibles */
-  object-fit: contain;
-}
-
-
-
-/* On décale un peu le titre du rayon pour l'équilibre visuel */
-h1 {
-  font-family: 'Segoe UI', sans-serif;
-  color: #2D2F31;
-  margin-left: 20px;
-}
 
