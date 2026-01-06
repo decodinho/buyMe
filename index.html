@@ -111,46 +111,45 @@
 
 
       return (
-        
-          <div>
-            <nav className="nav-bar">
-                <button className="category" onClick={() => setChoix("voiture")}>
-                  <figure><img src="voiture1.png" alt="Voitures" width="120" /><figcaption>Voitures</figcaption></figure>
-                </button>
-      
-                <button className="category" onClick={() => setChoix("sac")}>
-                  <figure><img src="sac2.png" alt="Sacs" width="120" /><figcaption>Sacs</figcaption></figure>
-                </button>
-      
-                <button className="category" onClick={() => setChoix("laptop")}>
-                  <figure><img src="laptop1.png" alt="Laptops" width="120" /><figcaption>Laptops</figcaption></figure>
-                </button>
-      
-                <button className="category" onClick={() => setChoix("basket")}>
-                  <figure><img src="basket1.png" alt="Baskets" width="120" /><figcaption>Baskets</figcaption></figure>
-                </button>
-      
-                <button className="category" onClick={() => setChoix("films")}>
-                  <figure><img src="films.png" alt="Films" width="120" /><figcaption>Films</figcaption></figure>
-                </button>
-      
-                <button className="category" onClick={() => setChoix("phones")}>
-                  <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
-                </button>
-             {/* BARRE DE RECHERCHE STYLE AMAZON */}
-            <div className="search-container">
-              <input className="search-input" type="text" placeholder="Rechercher un produit..."/>
-              <button className="search-button">🔍</button>
-            </div>   
-            <br/><br/>
-            <div>
-              <h1>Rayon actuel : {choix}</h1>
-              <ListeProduits produits={produits} />
-            </div>
-            </nav>
-          </div>
-        
-      );
+              <div>
+                <nav className="nav-bar">
+                  <button className="category" onClick={() => setChoix("voiture")}>
+                    <figure><img src="voiture1.png" alt="Voitures" width="120" /><figcaption>Voitures</figcaption></figure>
+                  </button>
+            
+                  <button className="category" onClick={() => setChoix("sac")}>
+                    <figure><img src="sac2.png" alt="Sacs" width="120" /><figcaption>Sacs</figcaption></figure>
+                  </button>
+            
+                  <button className="category" onClick={() => setChoix("laptop")}>
+                    <figure><img src="laptop1.png" alt="Laptops" width="120" /><figcaption>Laptops</figcaption></figure>
+                  </button>
+            
+                  <button className="category" onClick={() => setChoix("basket")}>
+                    <figure><img src="basket1.png" alt="Baskets" width="120" /><figcaption>Baskets</figcaption></figure>
+                  </button>
+            
+                  <button className="category" onClick={() => setChoix("films")}>
+                    <figure><img src="films.png" alt="Films" width="120" /><figcaption>Films</figcaption></figure>
+                  </button>
+            
+                  <button className="category" onClick={() => setChoix("phones")}>
+                    <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
+                  </button>
+            
+                  <div className="search-container">
+                    <input className="search-input" type="text" placeholder="Rechercher un produit..." />
+                    <button className="search-button">🔍</button>
+                  </div>
+                </nav>
+            
+                <div style={{ padding: '20px' }}>
+                  <h1>Rayon actuel : {choix}</h1>
+                  <ListeProduits produits={produits} />
+                </div>
+              </div>
+            );
+
     }
     
     const root = ReactDOM.createRoot(document.getElementById("root"));
