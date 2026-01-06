@@ -87,15 +87,7 @@
 
   function App() {
   
-  // ... reste du code
-  <header className="header-container">
-        <img 
-          src="www.udemy.com" 
-          alt="buyMe Logo" 
-          className="logo-buyme" 
-          onClick={() => window.location.reload()} 
-        />
-  </header>
+ 
   const [choix, setChoix] = useState("voiture");
   const [produits, setProduits] = useState([]);
 
@@ -144,7 +136,20 @@
           <button className="category" onClick={() => setChoix("phones")}>
             <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
           </button>
-          
+           {/* BARRE DE RECHERCHE STYLE AMAZON */}
+          <div className="search-container">
+              <input 
+                type="text" 
+                className="search-input" 
+                placeholder="Rechercher un produit..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <button className="search-button" onClick={handleSearch}>
+                🔍
+              </button>
+        </div>
           <br/><br/>
           <div>
             <h1>Rayon actuel : {choix}</h1>
