@@ -188,11 +188,13 @@ body {
 /* Conteneur qui regroupe catégories + barre de recherche */
 .nav-bar {
   display: flex;
-  align-items: center;
-  justify-content: space-between; /* Écarte les catégories à gauche et la recherche à droite */
+  flex-direction: row;      /* Force l'alignement en ligne */
+  align-items: center;      /* Aligne verticalement au centre */
+  justify-content: space-between; /* Écarte les deux blocs aux extrémités */
   padding: 10px 20px;
-  background-color: #131921; /* Fond sombre Amazon */
-  flex-wrap: wrap;
+  background-color: #131921; /* Fond sombre Amazon (décommentez-le) */
+  flex-wrap: nowrap;        /* INTERDIT le passage à la ligne */
+  width: 100%;
 }
 
 .category-menu {
@@ -203,9 +205,9 @@ body {
 /* Style de la barre de recherche Amazon */
 .search-container {
   display: flex;
-  flex: 1;
-  max-width: 500px;
-  margin-left: 20px;
+  flex: 1;                  /* Lui permet de prendre l'espace disponible */
+  max-width: 600px;         /* Augmentez un peu pour un look plus Amazon */
+  margin-left: 40px;
 }
 
 .search-input {
