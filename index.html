@@ -88,7 +88,14 @@
   function App() {
   console.log("Vérification countViews :", typeof window.countViews);
   // ... reste du code
-
+  <header className="header-container">
+        <img 
+          src="logoBuyMe.png" 
+          alt="buyMe Logo" 
+          className="logo-buyme" 
+          onClick={() => window.location.reload()} 
+        />
+  </header>
   const [choix, setChoix] = useState("voiture");
   const [produits, setProduits] = useState([]);
 
