@@ -54,37 +54,6 @@ body {
   gap: 16px;
 }
 
-/* Carte image avec légende */
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: #2f3643;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-}
-
-/* Ratio visuel harmonisé, image couvrante */
-.card img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: #0b0d12;
-}
-
-/* Légende discrète */
-.card figcaption {
-  padding: 10px 12px;
-  font-size: 0.95rem;
-  color: var(--muted);
-  border-top: 1px solid var(--card-border);
-}
 
 /* Responsivité: 2 colonnes sur tablettes, 1 sur mobiles */
 @media (max-width: 960px) {
