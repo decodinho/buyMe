@@ -215,3 +215,26 @@ body {
 @keyframes blinker {
   50% { opacity: 0; }
 }
+
+/* Container du Logo */
+.header-container {
+  display: flex;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.logo-buyme {
+  height: 50px; /* Taille élégante pour un logo type Udemy */
+  cursor: pointer;
+}
+
+/* On décale un peu le titre du rayon pour l'équilibre visuel */
+h1 {
+  font-family: 'Segoe UI', sans-serif;
+  color: #2D2F31;
+  margin-left: 20px;
+}
+
