@@ -111,6 +111,7 @@
 
 
       return (
+        <nav className="nav-bar">
           <div>
             {/* Correction des catégories pour chaque bouton */}
             <button className="category" onClick={() => setChoix("voiture")}>
@@ -137,16 +138,17 @@
               <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
             </button>
              {/* BARRE DE RECHERCHE STYLE AMAZON */}
-            
+            <div className="search-container">
               <input className="search-input" type="text" placeholder="Rechercher un produit..."/>
               <button className="search-button">🔍</button>
-                
+            </div>   
             <br/><br/>
             <div>
               <h1>Rayon actuel : {choix}</h1>
               <ListeProduits produits={produits} />
             </div>
           </div>
+        </nav>
       );
     }
     
