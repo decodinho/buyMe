@@ -188,33 +188,55 @@ body {
 /* Conteneur qui regroupe catégories + barre de recherche */
 .nav-bar {
   display: flex;
-  flex-direction: row;      /* Force l'alignement en ligne */
-  align-items: center;      /* Aligne verticalement au centre */
-  justify-content: space-between; /* Écarte les deux blocs aux extrémités */
-  padding: 10px 20px;
-  background-color: #131921; /* Fond sombre Amazon (décommentez-le) */
-  flex-wrap: nowrap;        /* INTERDIT le passage à la ligne */
-  width: 100%;
+  align-items: center;
+  justify-content: space-around; /* Aligne les catégories et la recherche */
+  padding: 15px;
+  background-color: #232f3e; /* Bleu foncé type Amazon */
+  color: white;
+  flex-wrap: wrap; 
 }
 
 .category-menu {
-  display: flex;
-  gap: 10px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-/* Style de la barre de recherche Amazon */
+.category:hover {
+  transform: scale(1.05);
+}
+
+.category figure {
+  margin: 0;
+  text-align: center;
+}
+
+.category figcaption {
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Bloc qui contient la Recherche + Connexion */
+.search-and-action {
+  display: flex;
+  flex-direction: column; /* Empile Recherche et Connexion verticalement */
+  align-items: flex-end;    /* Aligne à droite */
+  gap: 10px;               /* Espace entre barre et bouton */
+}
+
+/* Conteneur de la barre de recherche */
 .search-container {
   display: flex;
-  flex: 1;                  /* Lui permet de prendre l'espace disponible */
-  max-width: 600px;         /* Augmentez un peu pour un look plus Amazon */
-  margin-left: 40px;
+  height: 40px;
 }
 
 .search-input {
-  width: 100%;
-  padding: 10px;
+  width: 300px;
+  padding: 0 10px;
   border: none;
-  border-radius: 4px 0 0 4px; /* Arrondi à gauche seulement */
+  border-radius: 4px 0 0 4px;
   outline: none;
   font-size: 16px;
 }
@@ -222,13 +244,28 @@ body {
 .search-button {
   background-color: #febd69; /* Orange Amazon */
   border: none;
-  padding: 10px 15px;
-  border-radius: 0 4px 4px 0; /* Arrondi à droite seulement */
+  padding: 0 15px;
+  border-radius: 0 4px 4px 0;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 18px;
 }
 
 .search-button:hover {
   background-color: #f3a847;
 }
 
+/* Bouton Connexion JAUNE */
+.btn-login {
+  background-color: #FFD814; /* Jaune vif */
+  border: 1px solid #FCD200;
+  border-radius: 8px;
+  padding: 8px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+.btn-login:hover {
+  background-color: #F7CA00;
+}
