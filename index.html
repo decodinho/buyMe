@@ -75,9 +75,18 @@
                 <span className="clignotement">OFFRE LIMITÉE !</span>
                 
                 <div className="rating">
-                  <Stars note={p.note}/><strong>{p.note}</strong>
-                  <em className="views-badge">{p.vues || 0} vues</em>
-                </div>
+                        {/* On passe la note. Si elle est absente (undefined), on envoie 0 */}
+                        <Stars note={p.note || 0} />
+                        
+                        {/* Affichage du chiffre à côté des étoiles pour vérification */}
+                        <strong style={{ marginLeft: '5px', color: '#666' }}>
+                          {p.note ? p.note : "N/A"}
+                        </strong>
+                      
+                        <em className="views-badge" style={{ marginLeft: '10px' }}>
+                          {p.vues || 0} vues
+                        </em>
+                  </div>
         
                 <p className="description">{p.descrArticle || "Article sans detail"}</p>
                 
