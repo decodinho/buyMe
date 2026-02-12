@@ -59,8 +59,8 @@
                 <span className="clignotement">OFFRE LIMITÉE !</span>
                 
                 <div className="rating">
-                  <Stars note={p.note}/>
-                  <em className="views-badge">{p.vues || 0} vues, {p.note}</em>
+                  <Stars note={p.note}/><strong>{p.note}</strong>
+                  <em className="views-badge">{p.vues || 0} vues</em>
                 </div>
         
                 <p className="description">{p.descrArticle || "Article sans detail"}</p>
