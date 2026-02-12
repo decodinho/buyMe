@@ -10,7 +10,6 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Assurez-vous que le nom du fichier est exact (minuscules/majuscules) -->
   <script src="countViews.JS"></script>
   <script src="reduction.js"></script>
 </head>
@@ -20,12 +19,10 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-  function ListeProduits({ produits }) {
-  // 1. écomposition automatique si c'est une String
+    function ListeProduits({ produits }) {
       let listeArticles = produits;
       
       if (typeof produits === 'string') {
-        console.log("merci : conversion de la string en tableau effectuée");
         try {
           listeArticles = JSON.parse(produits);
         } catch (e) {
@@ -34,127 +31,110 @@
         }
       }
     
-      // 2. Sécurité : on vérifie qu'on a bien un tableau pour éviter le crash du .map()
-      if (!Array.isArray(listeArticles)) {
-        return <p>Chargement ou format de données invalide...</p>;
+      if (!Array.isArray(listeArticles) || listeArticles.length === 0) {
+        return <p>Chargement des produits ou aucun produit trouvé...</p>;
       }
     
       return (
-          <>
-          {/* En React, le log doit être entre accolades dans le JSX */}
-          {/*console.log(" articles :", Object.keys(listeArticles[0]))*/}
-          
-          <ul className="purple-amazon-list">
-                {listeArticles.map((p, index) => (
-                  <li className="purple-item" key={p.productID || index}>
-                    {/* Zone Image */}
-                    <div className="image-container" onClick={() => countViews(p.productID,p.category)}>
-                      <img src={p.image} alt={p.detailArticle}/>
-                    </div>
-              
-                    {/* Zone Texte */}
-                    <div className="info-container">
-                      <strong className="product-title" onClick={() => countViews(p.productID,p.category)}>
-                        {p.detailArticle || "Sans titre"}
-                      </strong>
+        <ul className="purple-amazon-list">
+          {listeArticles.map((p, index) => (
+            <li className="purple-item" key={p.productID || index}>
+              <div className="image-container" onClick={() => countViews(p.productID, p.category)}>
+                <img src={p.image} alt={p.detailArticle}/>
+              </div>
+        
+              <div className="info-container">
+                <strong className="product-title" onClick={() => countViews(p.productID, p.category)}>
+                  {p.detailArticle || "Sans titre"}
+                </strong>
 
-                      
-                        <div className="old-price-wrapper">
-                          <s className="text-muted">{p.prix}$</s>
-                        </div>
-                        <h3>{reduction(p.prix,p.reduction)}$</h3><p style={{ color: 'green', fontWeight: 'bold' }}>Economisez jusqu'à {p.reduction} % !!</p>
-                        <span className="clignotement">OFFRE LIMITÉE !</span>
-                    
-                      
-                      <div className="rating">
-                        <span className="stars">★★★★☆</span>
-                        <em className="views-badge">{p.vues || 0} vues</em>
-                      </div>
-              
-                      <p className="description">{p.descrArticle || "Article sans detail"}</p>
-                      
-                      <button className="purple-cart-btn">
-                        Ajouter au panier
-                      </button>
-                    </div>
-                  </li>
-                ))}
-          </ul>
-        </>
+                <div className="old-price-wrapper">
+                  <s className="text-muted">{p.prix}$</s>
+                </div>
+                <h3>{reduction(p.prix, p.reduction)}$</h3>
+                <p style={{ color: 'green', fontWeight: 'bold' }}>
+                  Economisez jusqu'à {p.reduction} % !!
+                </p>
+                <span className="clignotement">OFFRE LIMITÉE !</span>
+                
+                <div className="rating">
+                  <span className="stars">★★★★☆</span>
+                  <em className="views-badge">{p.vues || 0} vues</em>
+                </div>
+        
+                <p className="description">{p.descrArticle || "Article sans detail"}</p>
+                
+                <button className="purple-cart-btn">
+                  Ajouter au panier
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       );
     }
 
+    function App() {
+      const [choix, setChoix] = useState("voiture");
+      const [produits, setProduits] = useState([]);
 
-  function App() {
-  
- 
-  const [choix, setChoix] = useState("voiture");
-  const [produits, setProduits] = useState([]);
-
-  useEffect(() => {
-    fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
-      .then(res => res.json())
-      .then(data => {
-        let articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
-
-        // CORRECTION : Si c'est un objet seul, on le met dans un tableau
-        if (articlesVrais && !Array.isArray(articlesVrais)) {
-          console.log("Transformation de l'objet unique en tableau");
-          articlesVrais = [articlesVrais];
-        }
-
-        console.log("Résultat final (doit être true) :", Array.isArray(articlesVrais));
-        setProduits(articlesVrais);
-      })
-      .catch(err => console.error("Erreur :", err));
-  }, [choix]);
-
+      useEffect(() => {
+        fetch(`https://l1upgx0w59.execute-api.us-east-1.amazonaws.com/dev/readArticles?category=${choix}`)
+          .then(res => res.json())
+          .then(data => {
+            let articlesVrais = typeof data === 'string' ? JSON.parse(data) : data;
+            if (articlesVrais && !Array.isArray(articlesVrais)) {
+              articlesVrais = [articlesVrais];
+            }
+            setProduits(articlesVrais);
+          })
+          .catch(err => console.error("Erreur :", err));
+      }, [choix]);
 
       return (
-              <div>
-                <nav className="nav-bar">
-                  <button className="category" onClick={() => setChoix("voiture")}>
-                    <figure><img src="voiture1.png" alt="Voitures" width="120" /><figcaption>Voitures</figcaption></figure>
-                  </button>
-            
-                  <button className="category" onClick={() => setChoix("sac")}>
-                    <figure><img src="sac2.png" alt="Sacs" width="120" /><figcaption>Sacs</figcaption></figure>
-                  </button>
-            
-                  <button className="category" onClick={() => setChoix("laptop")}>
-                    <figure><img src="laptop1.png" alt="Laptops" width="120" /><figcaption>Laptops</figcaption></figure>
-                  </button>
-            
-                  <button className="category" onClick={() => setChoix("basket")}>
-                    <figure><img src="basket1.png" alt="Baskets" width="120" /><figcaption>Baskets</figcaption></figure>
-                  </button>
-            
-                  <button className="category" onClick={() => setChoix("films")}>
-                    <figure><img src="films.png" alt="Films" width="120" /><figcaption>Films</figcaption></figure>
-                  </button>
-            
-                  <button className="category" onClick={() => setChoix("phones")}>
-                    <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
-                  </button>
-            
-                  <div className="search-container">
-                    <input className="search-input" type="text" placeholder="Rechercher un produit..." />
-                    <button className="search-button">🔍</button>
-                  </div>
+        <div>
+          <nav className="nav-bar">
+            <button className="category" onClick={() => setChoix("voiture")}>
+              <figure><img src="voiture1.png" alt="Voitures" width="120" /><figcaption>Voitures</figcaption></figure>
+            </button>
+      
+            <button className="category" onClick={() => setChoix("sac")}>
+              <figure><img src="sac2.png" alt="Sacs" width="120" /><figcaption>Sacs</figcaption></figure>
+            </button>
+      
+            <button className="category" onClick={() => setChoix("laptop")}>
+              <figure><img src="laptop1.png" alt="Laptops" width="120" /><figcaption>Laptops</figcaption></figure>
+            </button>
+      
+            <button className="category" onClick={() => setChoix("basket")}>
+              <figure><img src="basket1.png" alt="Baskets" width="120" /><figcaption>Baskets</figcaption></figure>
+            </button>
+      
+            <button className="category" onClick={() => setChoix("films")}>
+              <figure><img src="films.png" alt="Films" width="120" /><figcaption>Films</figcaption></figure>
+            </button>
+      
+            <button className="category" onClick={() => setChoix("phones")}>
+              <figure><img src="tel1.png" alt="Téléphones" width="120" /><figcaption>Phones</figcaption></figure>
+            </button>
+      
+            <div className="search-container">
+              <input className="search-input" type="text" placeholder="Rechercher un produit..." />
+              <button className="search-button">🔍</button>
+            </div>
 
-                  <!-- Bouton Connexion en bas -->
-                  <div class="action-box">
-                      <button class="btn-login">Connexion</button>
-                  </div>
-                </nav>
-            
-                <div style={{ padding: '20px' }}>
-                  <h1>Rayon actuel : {choix}</h1>
-                  <ListeProduits produits={produits} />
-                </div>
-              </div>
-            );
-
+            {/* Correction du commentaire ici : Bouton Connexion */}
+            <div className="action-box">
+                <button className="btn-login">Connexion</button>
+            </div>
+          </nav>
+      
+          <div style={{ padding: '20px' }}>
+            <h1>Rayon actuel : {choix}</h1>
+            <ListeProduits produits={produits} />
+          </div>
+        </div>
+      );
     }
     
     const root = ReactDOM.createRoot(document.getElementById("root"));
