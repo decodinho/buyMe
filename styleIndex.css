@@ -140,13 +140,6 @@ body {
 /* Badge Vues et Etoiles */
 .rating { margin-bottom: 10px; }
 .stars { color: #ff9900; margin-right: 10px; }
-.views-badge { 
-  font-size: 0.85rem; 
-  color: #6a1b9a; 
-  background: #f3e5f5; 
-  padding: 2px 8px; 
-  border-radius: 12px;
-}
 
 /* Description */
 .description {
@@ -268,4 +261,52 @@ body {
 .btn-login:hover {
   background-color: #F7CA00;
 }
+
+/* Conteneur global de la ligne de notation */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Espace entre les étoiles et le badge */
+  margin-bottom: 12px;
+}
+
+/* Le composant Stars (via className="stars-container") */
+.stars-container {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Étoile Active (Jaune/Orange Amazon) */
+.star-active {
+  color: #FF9900;
+  text-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* Étoile Inactive (Gris clair) */
+.star-inactive {
+  color: #E0E0E0;
+}
+
+/* Note numérique à côté des étoiles (ex: 4.5) */
+.note-number {
+  font-size: 0.85rem;
+  color: #565959;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+/* Ton badge de vues existant, harmonisé */
+.views-badge { 
+  font-size: 0.75rem; 
+  color: #6a1b9a; 
+  background: #f3e5f5; 
+  padding: 4px 10px; 
+  border-radius: 20px;
+  font-style: normal;
+  font-weight: 500;
+  border: 1px solid #e1bee7;
+}
+
 
