@@ -19,6 +19,22 @@
 
   <script type="text/babel">
     const { useState, useEffect } = React;
+    /* Copie ce bloc juste au-dessus de function ListeProduits */
+    function Stars({ note }) {
+      const n = Number(note) || 0;
+      const etoiles = [1, 2, 3, 4, 5];
+    
+      return (
+        <div style={{ display: 'inline-flex', color: '#FF9900', marginRight: '8px' }}>
+          {etoiles.map((i) => (
+            <span key={i} style={{ color: i <= n ? "#FF9900" : "#ccc" }}>
+              ★
+            </span>
+          ))}
+        </div>
+      );
+    }
+
 
     function ListeProduits({ produits }) {
       let listeArticles = produits;
