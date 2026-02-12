@@ -1,4 +1,4 @@
-function stars({ note }) {
+function Stars({ note }) {
   // On s'assure que la note est un nombre, sinon 0
   const n = Number(note) || 0;
   
