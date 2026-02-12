@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="countViews.JS"></script>
   <script src="reduction.js"></script>
+  <script src="stars.js"></script>
 </head>
 <body>
   <div id="root">Chargement...</div>
@@ -58,7 +59,7 @@
                 <span className="clignotement">OFFRE LIMITÉE !</span>
                 
                 <div className="rating">
-                  <span><stars note={p.note}/></span>
+                  <stars note={p.note}/>
                   <em className="views-badge">{p.vues || 0} vues</em>
                 </div>
         
