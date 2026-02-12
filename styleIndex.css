@@ -265,5 +265,7 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   transition: background-color 0.2s;
 }
-
+.btn-login:hover {
+  background-color: #F7CA00;
+}
 
