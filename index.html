@@ -90,9 +90,10 @@
         
                 <p className="description">{p.descrArticle || "Article sans detail"}</p>
                 
-                <button href = "PanierPage.html" className="purple-cart-btn">
+                <button onClick={() => window.location.href='PanierPage.html'} className="purple-cart-btn" >
                   Ajouter au panier
                 </button>
+
               </div>
             </li>
           ))}
