@@ -1,7 +1,7 @@
 /**
  * Récupère les données et les envoie à API Gateway
  */
-async function sentToCart(articleId) {
+async function sentToCart(produit) {
     const API_URL = "https://ag73mdaex0.execute-api.us-east-1.amazonaws.com/dev/cart";
 
     // 1. Récupération du SessionID (depuis sessionStorage ou génération d'un nouveau)
@@ -14,11 +14,11 @@ async function sentToCart(articleId) {
     // 2. Simulation de la récupération des données de l'article (ex: depuis le DOM ou une variable)
     const articleData = {
         sessionId: sessionId,
-        articleId: p.productID,
-        nom: p.nom,
-        prix: p.prix,
+        articleId: produit.productID,
+        nom: produit.nom,
+        prix: produit.prix,
         timestamp: Date.now()
-        image: p.image
+        image: produit.image
     };
 
     try {
