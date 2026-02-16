@@ -25,6 +25,7 @@ window.sentToCart = async function sentToCart(produit) {
         // 3. Envoi vers API Gateway avec l'API Fetch
         const response = await fetch(API_URL, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
