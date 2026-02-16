@@ -90,10 +90,7 @@
         
                 <p className="description">{p.descrArticle || "Article sans detail"}</p>
                 
-                <button onClick={() => window.location.href='PanierBasket.html'} className="purple-cart-btn" >
-                  Ajouter au panier
-                </button>
-
+               <button onClick={() => sentToCart(p)} className="purple-cart-btn">Ajouter au panier</button>
               </div>
             </li>
           ))}
