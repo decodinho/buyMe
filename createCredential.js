@@ -16,7 +16,7 @@ function initSession() {
     }
 
     // Affichage sur la page
-    document.getElementById('session-display').innerText = sessionId;
+    //document.getElementById('session-display').innerText = sessionId;
 }
 
 // Fonction pour tester le changement d'ID (vidage du casier)
