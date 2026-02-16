@@ -14,9 +14,9 @@ async function sentToCart(articleId) {
     // 2. Simulation de la récupération des données de l'article (ex: depuis le DOM ou une variable)
     const articleData = {
         sessionId: sessionId,
-        articleId: ,
-        nom: document.getElementById('article-nom').innerText,
-        prix: parseFloat(document.getElementById('article-prix').dataset.valeur),
+        articleId: p.productID,
+        nom: p.nom,
+        prix: p.prix,
         timestamp: Date.now()
     };
 
