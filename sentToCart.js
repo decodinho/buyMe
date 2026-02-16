@@ -17,7 +17,7 @@ window.sentToCart = async function sentToCart(produit) {
         articleId: produit.productID,
         nom: produit.nom,
         prix: produit.prix,
-        timestamp: Date.now()
+        timestamp: Date.now(),
         image: produit.image
     };
 
