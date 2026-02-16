@@ -18,6 +18,7 @@ async function sentToCart(articleId) {
         nom: p.nom,
         prix: p.prix,
         timestamp: Date.now()
+        image: p.image
     };
 
     try {
@@ -31,7 +32,7 @@ async function sentToCart(articleId) {
         });
 
         if (response.ok) {
-            console.log("Succès : Données envoyées à DynamoDB via AGW");
+            console.log("Succès : Données envoyées AGW");
         } else {
             console.error("Erreur lors de l'envoi", await response.text());
         }
