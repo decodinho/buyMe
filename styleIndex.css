@@ -335,54 +335,44 @@ body {
     background-color: #F7CA00;
 }
 
-/* Le wrapper du Panier placé juste en dessous */
+/* Le wrapper devient fixe à gauche */
 .amazon-cart-wrapper {
+    position: fixed;        /* Fixé sur l'écran */
+    left: 0;                /* Collé au bord gauche */
+    top: 50%;               /* Centré verticalement */
+    transform: translateY(-50%); /* Ajustement centrage */
     display: flex;
-    align-items: center;    /* Aligne l'icône et le texte "Panier" horizontalement */
+    flex-direction: column; /* Empile icône au dessus du texte */
+    align-items: center;
     cursor: pointer;
-    padding: 4px 8px;
-    border: 1px solid transparent;
-    transition: 0.2s;
-    width: 18px;
-    height: 18px;
+    padding: 15px 10px;
+    background-color: #232f3e; /* Bleu Amazon pour ressortir */
+    border-radius: 0 12px 12px 0; /* Arrondi seulement à droite */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;          /* Passe au dessus des produits */
+    transition: 0.3s;
 }
 
 .amazon-cart-wrapper:hover {
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Bordure discrète au survol */
-    border-radius: 2px;
+    padding-left: 20px;     /* Petit effet de glissement au survol */
+    background-color: #37475a;
 }
 
-/* Conteneur de l'icône pour positionner le badge orange */
-.cart-icon-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* Le compteur Orange Amazon */
-#cart-count {
-    position: absolute;
-    top: -8px;              /* Ajusté pour flotter au-dessus du caddie */
-    left: 16px;             /* Ajusté pour l'image de 35px */
-    background-color: #f08804;
-    color: white;
-    border-radius: 12px;
-    padding: 1px 6px;
-    font-size: 11px;
-    font-weight: bold;
-    min-width: 18px;
-    text-align: center;
-    border: 1px solid #232f3e; /* Petit contour pour détacher du fond bleu */
-}
-
-/* Texte "Panier" à côté de l'icône */
+/* On ajuste le texte pour qu'il soit lisible sous l'icône */
 .cart-text {
-    color: purple;
+    color: #FFD814;         /* Jaune pour bien voir sur le bleu */
     font-weight: bold;
-    margin-left: 6px;
-    font-size: 13px;
-    line-height: 1;
+    margin-top: 8px;        /* Espace sous l'icône */
+    font-size: 12px;
+    text-transform: uppercase;
 }
+
+/* On s'assure que l'icône est bien visible */
+.cart-icon-container img {
+    width: 40px;            /* Taille augmentée pour le côté gauche */
+    height: auto;
+}
+
 
 
 
