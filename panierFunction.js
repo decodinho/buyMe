@@ -1,6 +1,6 @@
 async function afficherPanier() {
     const sessionId = sessionStorage.getItem('user_session_id');
-    const API_URL = 'https://ag73mdaex0.execute-api.us-east-1.amazonaws.com/dev/readCartBdd';
+    const API_URL = 'https://ag73mdaex0.execute-api.us-east-1.amazonaws.com/dev/readCartBdd?sessionId={sessionId}';
     const conteneur = document.getElementById('panier-items'); // Votre div de destination
 
     try {
