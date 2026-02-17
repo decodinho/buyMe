@@ -346,7 +346,7 @@ body {
     align-items: center;
     cursor: pointer;
     padding: 15px 10px;
-    background-color: #232f3e; /* Bleu Amazon pour ressortir */
+    background-color: #F9A8D4; /* Bleu Amazon pour ressortir */
     border-radius: 0 12px 12px 0; /* Arrondi seulement à droite */
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     z-index: 1000;          /* Passe au dessus des produits */
