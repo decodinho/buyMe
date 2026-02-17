@@ -338,7 +338,7 @@ body {
 /* Le wrapper devient fixe à gauche */
 .amazon-cart-wrapper {
     position: fixed;        /* Fixé sur l'écran */
-    left: 0;                /* Collé au bord gauche */
+    right: 0;                /* Collé au bord gauche */
     top: 50%;               /* Centré verticalement */
     transform: translateY(-50%); /* Ajustement centrage */
     display: flex;
