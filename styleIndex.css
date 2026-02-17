@@ -309,45 +309,79 @@ body {
   border: 1px solid #e1bee7;
 }
 
+/* Conteneur parent qui empile le bouton et le panier */
+.action-box {
+    display: flex;
+    flex-direction: column; /* Alignement vertical */
+    align-items: center;    /* Centre les éléments l'un sous l'autre */
+    gap: 5px;               /* Espace réduit entre le bouton et le panier */
+    margin-left: 20px;      /* Décalage par rapport à la barre de recherche */
+}
+
+/* Style du bouton Connexion (Jaune Amazon) */
+.btn-login {
+    background-color: #FFD814;
+    border: 1px solid #FCD200;
+    border-radius: 8px;
+    padding: 6px 20px;      /* Un peu plus compact pour laisser de la place */
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;            /* Prend toute la largeur du conteneur */
+    transition: background-color 0.2s;
+}
+
+.btn-login:hover {
+    background-color: #F7CA00;
+}
+
+/* Le wrapper du Panier placé juste en dessous */
 .amazon-cart-wrapper {
     display: flex;
-    align-items: flex-end;
+    align-items: center;    /* Aligne l'icône et le texte "Panier" horizontalement */
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border: 1px solid transparent;
     transition: 0.2s;
-    margin-left: 20px;
 }
 
 .amazon-cart-wrapper:hover {
-    border: 1px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Bordure discrète au survol */
+    border-radius: 2px;
 }
 
+/* Conteneur de l'icône pour positionner le badge orange */
 .cart-icon-container {
     position: relative;
     display: flex;
     align-items: center;
 }
 
+/* Le compteur Orange Amazon */
 #cart-count {
     position: absolute;
-    top: -8px;    /* Un peu plus haut */
-    left: 18px;   /* Ajusté pour l'image 35px */
+    top: -8px;              /* Ajusté pour flotter au-dessus du caddie */
+    left: 16px;             /* Ajusté pour l'image de 35px */
     background-color: #f08804;
     color: white;
-    border-radius: 12px; /* Plus ovale */
-    padding: 1px 5px;
-    font-size: 12px;
+    border-radius: 12px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
+    border: 1px solid #232f3e; /* Petit contour pour détacher du fond bleu */
 }
 
-
+/* Texte "Panier" à côté de l'icône */
 .cart-text {
     color: white;
     font-weight: bold;
-    margin-left: 5px;
-    font-size: 14px;
-    padding-bottom: 5px;
+    margin-left: 6px;
+    font-size: 13px;
+    line-height: 1;
 }
+
 
 
 
