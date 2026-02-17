@@ -360,7 +360,7 @@ body {
 
 /* On ajuste le texte pour qu'il soit lisible sous l'icône */
 .cart-text {
-    color: #FFD814;         /* Jaune pour bien voir sur le bleu */
+    color: purple;         /* Jaune pour bien voir sur le bleu */
     font-weight: bold;
     margin-top: 8px;        /* Espace sous l'icône */
     font-size: 12px;
