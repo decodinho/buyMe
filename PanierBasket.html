@@ -2,40 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Mon Panier</title>
     <style>
         body { font-family: 'Inter', sans-serif; background: #f8f8f8; display: flex; justify-content: center; padding: 50px; }
-        .cart-container { background: white; width: 400px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        h2 { font-weight: 300; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .item { display: flex; align-items: center; margin: 20px 0; background:#E0EDC6;}
-        .item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #eee; }
+        .cart-container { background: white; width: 450px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h2 { font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 15px; color: #1a1a1a; }
+        
+        /* Conteneur pour les articles injectés par JS */
+        #panier-items { min-height: 50px; }
+
+        .item { display: flex; align-items: center; margin: 15px 0; padding: 10px; border-radius: 8px; background: #fff; border: 1px solid #f0f0f0; }
+        .item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #f9f9f9; }
         .item-info { flex: 1; margin-left: 15px; }
-        .item-name { font-size: 0.9em; font-weight: 600; color: #333; }
-        .item-price { font-size: 0.85em; color: #888; margin-top: 4px; }
-        .total-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-        .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9em; }
-        .checkout-btn { width: 100%; background: #1a1a1a; color: white; border: none; padding: 15px; border-radius: 6px; 
-                        cursor: pointer; font-size: 14px; transition: opacity 0.2s; margin-top: 15px; }
-        .checkout-btn:hover { opacity: 0.8; }
+        .item-name { font-size: 0.95em; font-weight: 600; color: #333; }
+        .item-price { font-size: 0.9em; color: #666; margin-top: 4px; }
+        
+        .total-section { margin-top: 30px; border-top: 2px solid #f0f0f0; padding-top: 20px; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1em; color: #444; }
+        .checkout-btn { width: 100%; background: #f0c14b; border: 1px solid #a88734; color: #111; padding: 12px; border-radius: 8px; 
+                        cursor: pointer; font-size: 14px; font-weight: bold; margin-top: 15px; }
+        .checkout-btn:hover { background: #e7bb4e; }
     </style>
 </head>
 <body>
     <div class="cart-container">
         <h2>Mon Panier</h2>
-        <div class="item">
-            
-            <div class="item-info">
-                <img src="gaming.png" alt="Produit" heigth=20px width=20px><div class="item-name">Montre Minimaliste Or</div>
-                <div class="item-price">129,00 €</div>
-               <img src="basket1.png" alt="Produit" heigth=20px width=20px> <div class="item-name">Basket</div>
-                <div class="item-price">9,99 €</div>
-            </div>
+        
+        <!-- Zone où le JS va injecter les articles -->
+        <div id="panier-items">
+            <p style="text-align: center; color: #888;">Chargement de votre panier...</p>
         </div>
+
         <div class="total-section">
-            <div class="total-row"><span>Sous-total</span><span>129,00 €</span></div>
-            <div class="total-row" style="font-weight: 700;"><span>Total</span><span>129,00 €</span></div>
-            <button class="checkout-btn">COMMANDER</button>
+            <div class="total-row">
+                <span>Sous-total</span>
+                <span id="sous-total">0,00 €</span>
+            </div>
+            <div class="total-row" style="font-weight: 800; font-size: 1.2em; color: #000;">
+                <span>Total</span>
+                <span id="total-panier">0,00 €</span>
+            </div>
+            <button class="checkout-btn">PASSER LA COMMANDE</button>
         </div>
     </div>
+
+    <!-- N'oublie pas d'inclure ton fichier JS ici -->
+    <script src="ton_fichier_js.js"></script>
 </body>
 </html>
-
