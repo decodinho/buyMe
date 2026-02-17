@@ -331,17 +331,15 @@ body {
 
 #cart-count {
     position: absolute;
-    top: -5px;
-    left: 13px; /* Positionné pile au dessus du caddie */
-    background-color: #f08804; /* Orange Amazon */
+    top: -8px;    /* Un peu plus haut */
+    left: 18px;   /* Ajusté pour l'image 35px */
+    background-color: #f08804;
     color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 14px;
-    font-weight: bold;
-    min-width: 15px;
-    text-align: center;
+    border-radius: 12px; /* Plus ovale */
+    padding: 1px 5px;
+    font-size: 12px;
 }
+
 
 .cart-text {
     color: white;
