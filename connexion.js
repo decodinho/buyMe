@@ -1,5 +1,11 @@
 // 1. CONFIGURATION : On indique à Amplify quel Pool Cognito utiliser
-const { Amplify, Auth } = aws_amplify;
+// On récupère Amplify depuis l'objet global window
+const Amplify = window.Amplify;
+const Auth = window.Amplify.Auth;
+
+// Si vous utilisez la version très récente du CDN, essayez ceci à la place :
+// const { Amplify, Auth } = window.aws_amplify;
+
 
 Amplify.configure({
     Auth: {
