@@ -4,8 +4,8 @@ const { Amplify, Auth } = aws_amplify;
 Amplify.configure({
     Auth: {
         region: 'us-east-1', // Ta région (ex: us-east-1)
-        userPoolId: 'us-east-1_aB123cDeF', // Ton ID trouvé dans la console Cognito
-        userPoolWebClientId: '3n4b5v6c7x8z9p0o1i2u3y4t5r' // Ton Client ID d'application
+        userPoolId: 'us-east-1_BHObJQDhO', // Ton ID trouvé dans la console Cognito
+        userPoolWebClientId: '15jr9pmj33ck0r7ms92mft2h3i' // Ton Client ID d'application
     }
 });
 
