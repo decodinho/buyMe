@@ -71,42 +71,7 @@
 
   <script>
     // ÉTAPE 3 : Configuration
-    const { Amplify, Auth } = window.aws_amplify;
-
-    Amplify.configure({
-      Auth: {
-        Cognito: {
-          userPoolId: 'us-east-1_Y6RbSWAyM',      // ex: us-east-1_xxxxxx
-          userPoolClientId: '47fgl7u7e595ob3lj2u3uddqsv'    // ex: 7u9xxxxxxxxxxx
-        }
-      }
-    });
-
-    // ÉTAPE 4 : Logique de connexion
-    const loginForm = document.getElementById('loginForm');
-    const submitBtn = document.getElementById('submitBtn');
-
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Empêche le rechargement de la page
-      
-      const username = document.getElementById('login').value;
-      const password = document.getElementById('password').value;
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Connexion...";
-
-      try {
-        const user = await Auth.signIn(username, password);
-        console.log("Succès:", user);
-        alert("Connexion réussie !");
-        window.location.href = "index.html"; // Redirection vers l'accueil
-      } catch (error) {
-        console.error("Erreur Cognito:", error);
-        alert("Erreur : " + (error.message || "Identifiants invalides"));
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Se connecter";
-      }
-    });
+    
   </script>
 </body>
 </html>
