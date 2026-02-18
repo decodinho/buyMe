@@ -1,17 +1,20 @@
-// 1. CONFIGURATION : On indique à Amplify quel Pool Cognito utiliser
-// On récupère Amplify depuis l'objet global window
-const Amplify = window.Amplify;
-const Auth = window.Amplify.Auth;
+// On cherche la bibliothèque là où elle peut se cacher (Amplify ou aws_amplify)
+const lib = window.Amplify || window.aws_amplify;
 
-// Si vous utilisez la version très récente du CDN, essayez ceci à la place :
-// const { Amplify, Auth } = window.aws_amplify;
+if (!lib) {
+    console.error("ERREUR : La bibliothèque Amplify n'est pas chargée. Vérifiez le lien <script> dans le HTML.");
+}
 
+// On extrait les modules nécessaires
+const Amplify = lib;
+const Auth = lib.Auth;
 
+// Configuration
 Amplify.configure({
     Auth: {
-        region: 'us-east-1', // Ta région (ex: us-east-1)
-        userPoolId: 'us-east-1_BHObJQDhO', // Ton ID trouvé dans la console Cognito
-        userPoolWebClientId: '15jr9pmj33ck0r7ms92mft2h3i' // Ton Client ID d'application
+        region: 'us-east-1',
+        userPoolId: 'us-east-1_BHObJQDhO',
+        userPoolWebClientId: '15jr9pmj33ck0r7ms92mft2h3i'
     }
 });
 
