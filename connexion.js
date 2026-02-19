@@ -1,6 +1,6 @@
 
 // Configuration
-Amplify.configure({
+aws_amplify.Amplify.configure({
     Auth: {
         region: 'us-east-1',
         userPoolId: 'us-east-1_BHObJQDhO',
