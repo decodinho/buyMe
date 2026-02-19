@@ -1,4 +1,3 @@
-
 // Configuration
 aws_amplify.Amplify.configure({
     Auth: {
@@ -8,38 +7,36 @@ aws_amplify.Amplify.configure({
     }
 });
 
-// 2. ÉCOUTEUR D'ÉVÉNEMENT : Quand on clique sur le bouton
+const Auth = aws_amplify.Auth;
+
+// ÉCOUTEUR D'ÉVÉNEMENT : Quand on clique sur le bouton
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
     
-    const email = document.getElementById('loginForm').value;
+    const email = document.getElementById('login').value;   // ⚠️ correction : prendre la valeur du champ login
     const password = document.getElementById('password').value;
     const errorDisplay = document.getElementById('error-message');
 
     try {
-        // 3. L'INSTRUCTION CLÉ : Authentification auprès de Cognito
-        const user = await Amplify.Auth.signIn(email, password);
-        
+        // Authentification auprès de Cognito
+        const user = await Auth.signIn(email, password);
         console.log("Connexion réussie :", user);
 
-        // Récupération du jeton pour prouver l'identité à API Gateway plus tard
-        const session = await Amplify.Auth.currentSession();
+        // Récupération du jeton
+        const session = await Auth.currentSession();
         const token = session.getIdToken().getJwtToken();
 
-        
-
-
-        
         // Stockage du nom pour l'accueil (Optionnel)
         localStorage.setItem('user_name', email);
 
-        // 4. REDIRECTION : Vers ta page d'accueil avec les produits
+        // Redirection
         window.location.href = 'index.html';
 
     } catch (error) {
         console.error("Erreur Cognito :", error);
-        errorDisplay.innerText = error.message; // Affiche l'erreur (ex: "User not found")
-        errorDisplay.style.display = 'block';
+        if (errorDisplay) {
+            errorDisplay.innerText = error.message;
+            errorDisplay.style.display = 'block';
+        }
     }
 });
-
