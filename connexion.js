@@ -1,6 +1,3 @@
-// Avec le fichier local, l'objet s'appelle souvent Amplify ou aws_amplify
-const lib = window.Amplify || window.aws_amplify;
-
 
 // Configuration
 Amplify.configure({
