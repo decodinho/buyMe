@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styleConnexion.css" />
 
-  <!-- ÉTAPE 1 : Chargement d'Amplify -->
+  <!-- Charger Amplify avant ton script -->
   <script src="https://unpkg.com/aws-amplify@latest/dist/aws-amplify.min.js"></script>
   <script src="connexion.js"></script>
 </head>
@@ -23,10 +23,9 @@
         <p class="card__subtitle">Connectez-vous pour accéder à votre session</p>
       </header>
 
-      <!-- ÉTAPE 2 : ID ajouté au formulaire pour le JS -->
       <form id="loginForm" class="form" novalidate>
         <div class="form__group">
-          <label for="loginForm" class="form__label">Identifiant</label>
+          <label for="login" class="form__label">Identifiant</label>
           <input
             type="text"
             id="login"
@@ -53,26 +52,19 @@
         </div>
 
         <div class="form__actions">
-          <label class="checkbox">
-            <input type="checkbox" name="remember" class="checkbox__input" />
-            <span class="checkbox__label">Se souvenir de moi</span>
-          </label>
-
           <button type="submit" id="submitBtn" class="btn btn--primary">
             Se connecter
           </button>
         </div>
       </form>
 
+      <!-- Zone pour afficher les erreurs Cognito -->
+      <div id="error-message" style="color:red; display:none;"></div>
+
       <footer class="card__footer">
         <p class="card__alt">Nouveau ici ? <a class="form__link" href="#">Créer un compte</a></p>
       </footer>
     </section>
   </main>
-
-  <script>
-    // ÉTAPE 3 : Configuration
-    
-  </script>
 </body>
 </html>
