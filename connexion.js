@@ -9,7 +9,7 @@ AwsAmplify.Amplify.configure({
 
 const Auth = AwsAmplify.Auth;
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('login').addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const email = document.getElementById('login').value;
