@@ -9,10 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styleConnexion.css" />
-
-  <!-- Charger Amplify avant ton script -->
-  <script src="https://unpkg.com/aws-amplify@latest/dist/aws-amplify.min.js"></script>
-  <script src="connexion.js"></script>
 </head>
   
 <body>
@@ -59,12 +55,18 @@
       </form>
 
       <!-- Zone pour afficher les erreurs Cognito -->
-      <div id="error-message" style="color:red; display:none;"></div>
+      <div id="error-message" style="color:red; display:none; margin-top: 15px; padding: 10px; border-radius: 4px; background-color: #fee;"></div>
 
       <footer class="card__footer">
         <p class="card__alt">Nouveau ici ? <a class="form__link" href="#">Créer un compte</a></p>
       </footer>
     </section>
   </main>
+
+  <!-- Charger Amplify AVANT votre script -->
+  <script src="https://unpkg.com/aws-amplify@latest/dist/aws-amplify.min.js"></script>
+  
+  <!-- Votre script de connexion -->
+  <script src="connexion.js"></script>
 </body>
 </html>
