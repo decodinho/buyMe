@@ -23,7 +23,7 @@ Amplify.configure({
 });
 
 // 2. ÉCOUTEUR D'ÉVÉNEMENT : Quand on clique sur le bouton
-document.getElementById('login-form').addEventListener('submit', async (e) => {
+document.getElementById('login').addEventListener('submit', async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
     
     const email = document.getElementById('email').value;
