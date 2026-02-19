@@ -1,4 +1,4 @@
-// Configuration
+// Configuration Amplify
 AwsAmplify.Amplify.configure({
     Auth: {
         region: 'us-east-1',
@@ -9,21 +9,27 @@ AwsAmplify.Amplify.configure({
 
 const Auth = AwsAmplify.Auth;
 
-document.getElementById('login').addEventListener('submit', async (e) => {
-    e.preventDefault();
+// Écouteur d'événement sur le formulaire
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page
     
     const email = document.getElementById('login').value;
     const password = document.getElementById('password').value;
     const errorDisplay = document.getElementById('error-message');
 
     try {
+        // Authentification auprès de Cognito
         const user = await Auth.signIn(email, password);
         console.log("Connexion réussie :", user);
 
+        // Récupération du jeton
         const session = await Auth.currentSession();
         const token = session.getIdToken().getJwtToken();
 
+        // Stockage du nom pour l'accueil
         localStorage.setItem('user_name', email);
+
+        // Redirection vers la page d'accueil
         window.location.href = 'index.html';
 
     } catch (error) {
