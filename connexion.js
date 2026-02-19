@@ -12,7 +12,7 @@ Amplify.configure({
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
     
-    const email = document.getElementById('login').value;
+    const email = document.getElementById('loginForm').value;
     const password = document.getElementById('password').value;
     const errorDisplay = document.getElementById('error-message');
 
