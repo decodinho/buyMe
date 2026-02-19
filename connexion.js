@@ -18,13 +18,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     try {
         // 3. L'INSTRUCTION CLÉ : Authentification auprès de Cognito
-        const user = await Auth.signIn(email, password);
+        const user = await Amplify.Auth.signIn(email, password);
         
         console.log("Connexion réussie :", user);
 
         // Récupération du jeton pour prouver l'identité à API Gateway plus tard
-        const session = await Auth.currentSession();
+        const session = await Amplify.Auth.currentSession();
         const token = session.getIdToken().getJwtToken();
+
+        
+
+
         
         // Stockage du nom pour l'accueil (Optionnel)
         localStorage.setItem('user_name', email);
