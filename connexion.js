@@ -1,17 +1,6 @@
 // Avec le fichier local, l'objet s'appelle souvent Amplify ou aws_amplify
 const lib = window.Amplify || window.aws_amplify;
 
-if (!lib) {
-    alert("Le fichier local aws-amplify.min.js est introuvable ou mal chargé.");
-} else {
-    lib.Amplify.configure({
-        Auth: {
-            region: 'us-east-1',
-            userPoolId: 'us-east-1_BHObJQDhO',
-            userPoolWebClientId: '15jr9pmj33ck0r7ms92mft2h3i'
-        }
-    });
-}
 
 // Configuration
 Amplify.configure({
