@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentification AWS</title>
-    <!-- On charge Amplify en mode GLOBAL (UMD) pour éviter les erreurs CORS de modules -->
-    <script src="https://cdnjs.cloudflare.com"></script>
 </head>
 <body class="page">
 
     <div class="card">
         <div class="card__header">
-            <h1 class="card__title" id="ui-title">Connexion</h1>
-            <p class="card__subtitle" id="ui-subtitle">Accédez à votre espace sécurisé</p>
+            <h1 class="card__title" id="ui-title">Chargement...</h1>
+            <p class="card__subtitle" id="ui-subtitle">Veuillez patienter</p>
         </div>
 
-        <div class="form">
+        <div class="form" id="auth-form-container">
             <div class="form__group">
                 <label class="form__label">Email</label>
                 <input type="email" id="auth-email" class="form__input" placeholder="nom@exemple.com">
@@ -42,31 +40,48 @@
         </div>
     </div>
 
+    <!-- SCRIPT AWS AMPLIFY (Chargement avec gestion d'erreur) -->
+    <script src="https://cdnjs.cloudflare.com" 
+            onload="initAmplify()" 
+            onerror="alert('Erreur de chargement du SDK AWS. Vérifiez votre connexion.')"></script>
+
     <script>
-        // Extraction des objets depuis le bundle global
-        const { Amplify, Auth } = window.aws_amplify;
-
-        // 1. CONFIGURATION (Format v5)
-        Amplify.configure({
-            Auth: {
-                region: 'eu-west-1', // Remplacez par votre région (ex: us-east-1)
-                userPoolId: 'VOTRE_USER_POOL_ID',
-                userPoolClientId: 'VOTRE_CLIENT_ID'
-            }
-        });
-
+        let Auth, Amplify;
         let currentMode = 'LOGIN';
 
-        const uiTitle = document.getElementById('ui-title');
-        const uiSubtitle = document.getElementById('ui-subtitle');
-        const btnAuth = document.getElementById('btn-auth');
-        const linkToggle = document.getElementById('link-toggle');
-        const toggleText = document.getElementById('toggle-text');
-        const groupPass = document.getElementById('group-password');
-        const groupCode = document.getElementById('group-code');
+        // 1. INITIALISATION APRES CHARGEMENT DU SDK
+        function initAmplify() {
+            if (!window.aws_amplify) {
+                console.error("SDK non trouvé dans window.aws_amplify");
+                return;
+            }
+            
+            // Extraction sécurisée
+            Amplify = window.aws_amplify.Amplify;
+            Auth = window.aws_amplify.Auth;
 
-        // 2. MISE À JOUR DE L'INTERFACE
+            Amplify.configure({
+                Auth: {
+                    region: 'eu-west-1', // ex: eu-west-3 pour Paris
+                    userPoolId: 'VOTRE_USER_POOL_ID',
+                    userPoolClientId: 'VOTRE_CLIENT_ID'
+                }
+            });
+
+            checkUserSession();
+            updateUI();
+        }
+
+        // 2. LOGIQUE D'INTERFACE
         function updateUI() {
+            const uiTitle = document.getElementById('ui-title');
+            const uiSubtitle = document.getElementById('ui-subtitle');
+            const btnAuth = document.getElementById('btn-auth');
+            const linkToggle = document.getElementById('link-toggle');
+            const toggleText = document.getElementById('toggle-text');
+            const groupPass = document.getElementById('group-password');
+            const groupCode = document.getElementById('group-code');
+
             if (currentMode === 'LOGIN') {
                 uiTitle.innerText = "Connexion";
                 uiSubtitle.innerText = "Heureux de vous revoir";
@@ -98,8 +113,9 @@
             updateUI();
         };
 
-        // 3. ACTIONS AUTHENTIFICATION (Syntaxe Auth v5)
+        // 3. ACTIONS AUTHENTIFICATION
         window.handleAuthAction = async () => {
+            if (!Auth) return;
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
             const code = document.getElementById('auth-code').value;
@@ -107,43 +123,40 @@
             try {
                 if (currentMode === 'LOGIN') {
                     await Auth.signIn(email, password);
-                    alert("Connecté !");
-                    window.location.reload();
-                } 
-                else if (currentMode === 'REGISTER') {
+                    location.reload();
+                } else if (currentMode === 'REGISTER') {
                     await Auth.signUp({ username: email, password, attributes: { email } });
                     currentMode = 'VERIFY';
                     updateUI();
-                } 
-                else if (currentMode === 'VERIFY') {
+                } else if (currentMode === 'VERIFY') {
                     await Auth.confirmSignUp(email, code);
-                    alert("Email vérifié ! Connectez-vous.");
+                    alert("Compte vérifié !");
                     currentMode = 'LOGIN';
                     updateUI();
                 }
             } catch (err) {
-                alert("Erreur AWS : " + err.message);
+                alert(err.message);
             }
         };
 
-        // 4. PERSISTANCE ET DÉCONNEXION
-        window.handleSignOut = async () => {
-            await Auth.signOut();
-            window.location.reload();
-        };
-
-        window.onload = async () => {
+        // 4. VERIFICATION SESSION
+        async function checkUserSession() {
             try {
                 const user = await Auth.currentAuthenticatedUser();
-                uiTitle.innerText = "Bienvenue";
-                uiSubtitle.innerText = user.attributes.email || user.username;
-                document.querySelector('.form').innerHTML = `
-                    <button class="btn btn--primary" onclick="handleSignOut()">Déconnexion</button>
+                document.getElementById('ui-title').innerText = "Bienvenue";
+                document.getElementById('ui-subtitle').innerText = user.attributes.email;
+                document.getElementById('auth-form-container').innerHTML = `
+                    <button class="btn btn--primary" onclick="handleLogout()">Déconnexion</button>
                 `;
                 document.getElementById('ui-toggle-wrapper').style.display = 'none';
             } catch (e) {
-                updateUI();
+                // Pas connecté, on laisse le formulaire
             }
+        }
+
+        window.handleLogout = async () => {
+            await Auth.signOut();
+            location.reload();
         };
     </script>
 </body>
