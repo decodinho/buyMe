@@ -125,7 +125,11 @@
                     await Auth.signIn(email, password);
                     location.reload();
                 } else if (currentMode === 'REGISTER') {
-                    await Auth.signUp({ username: email, password, attributes: { email } });
+                    
+                    await Auth.signUp({username: email, password: password, attributes:{email: email}}); // Assurez-vous que l'attribut 'email' est bien requis dans votre User Pool 
+
+
+                    
                     currentMode = 'VERIFY';
                     updateUI();
                 } else if (currentMode === 'VERIFY') {
