@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>AWS Auth - Amplify v6</title>
-    <script src="styleConnexion.js"></script> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification AWS - Amplify v6</title>
 </head>
 <body class="page">
 
@@ -14,19 +14,19 @@
         </div>
 
         <div class="form">
-            <!-- Groupe Email -->
+            <!-- Email -->
             <div class="form__group">
                 <label class="form__label">Email</label>
                 <input type="email" id="auth-email" class="form__input" placeholder="nom@exemple.com">
             </div>
 
-            <!-- Groupe Mot de passe -->
+            <!-- Mot de passe -->
             <div class="form__group" id="group-password">
                 <label class="form__label">Mot de passe</label>
                 <input type="password" id="auth-password" class="form__input" placeholder="••••••••">
             </div>
 
-            <!-- Groupe Code (caché au départ) -->
+            <!-- Code de vérification (caché par défaut) -->
             <div class="form__group" id="group-code" style="display: none;">
                 <label class="form__label">Code de vérification</label>
                 <input type="text" id="auth-code" class="form__input" placeholder="123456">
@@ -38,27 +38,34 @@
         <div class="card__footer">
             <p class="card__alt" id="ui-toggle-wrapper">
                 <span id="toggle-text">Pas encore de compte ?</span>
-                <a class="form__link" id="link-toggle">S'inscrire</a>
+                <a class="form__link" id="link-toggle" href="#">S'inscrire</a>
             </p>
         </div>
     </div>
 
-    <!-- SDK AMPLIFY V6 VIA CDN -->
+    <!-- LOGIQUE AMPLIFY V6 VIA UNPKG (FIX CORS) -->
     <script type="module">
-        import { Amplify } from 'https://cdn.skypack.dev';
-        import { signIn, signUp, confirmSignUp, signOut, getCurrentUser } from 'https://cdn.skypack.dev';
+        // Importation directe des fichiers ESM pour éviter les erreurs 404/CORS
+        import { Amplify } from 'https://unpkg.com';
+        import { 
+            signIn, 
+            signUp, 
+            confirmSignUp, 
+            signOut, 
+            getCurrentUser 
+        } from 'https://unpkg.com';
 
-        // 1. CONFIGURATION
+        // 1. CONFIGURATION (Remplacez par vos vrais IDs)
         Amplify.configure({
             Auth: {
                 Cognito: {
-                    userPoolId: 'us-east-1_BHObJQDhO',
-                    userPoolClientId: '15jr9pmj33ck0r7ms92mft2h3i'
+                    userPoolId: 'VOTRE_USER_POOL_ID',
+                    userPoolClientId: 'VOTRE_CLIENT_ID'
                 }
             }
         });
 
-        let currentMode = 'LOGIN'; // LOGIN, REGISTER, VERIFY
+        let currentMode = 'LOGIN';
 
         const uiTitle = document.getElementById('ui-title');
         const uiSubtitle = document.getElementById('ui-subtitle');
@@ -68,7 +75,7 @@
         const groupPass = document.getElementById('group-password');
         const groupCode = document.getElementById('group-code');
 
-        // 2. GESTION DE L'INTERFACE (TOGGLE)
+        // 2. MISE À JOUR DE L'INTERFACE
         const updateUI = () => {
             if (currentMode === 'LOGIN') {
                 uiTitle.innerText = "Connexion";
@@ -76,7 +83,7 @@
                 btnAuth.innerText = "Se connecter";
                 toggleText.innerText = "Pas encore de compte ?";
                 linkToggle.innerText = "S'inscrire";
-                groupPass.style.display = 'grid';
+                groupPass.style.display = 'block';
                 groupCode.style.display = 'none';
             } else if (currentMode === 'REGISTER') {
                 uiTitle.innerText = "Créer un compte";
@@ -84,14 +91,14 @@
                 btnAuth.innerText = "S'inscrire";
                 toggleText.innerText = "Déjà inscrit ?";
                 linkToggle.innerText = "Se connecter";
-                groupPass.style.display = 'grid';
+                groupPass.style.display = 'block';
                 groupCode.style.display = 'none';
             } else if (currentMode === 'VERIFY') {
                 uiTitle.innerText = "Vérification";
                 uiSubtitle.innerText = "Code envoyé par e-mail";
                 btnAuth.innerText = "Confirmer le compte";
                 groupPass.style.display = 'none';
-                groupCode.style.display = 'grid';
+                groupCode.style.display = 'block';
             }
         };
 
@@ -101,7 +108,7 @@
             updateUI();
         };
 
-        // 3. LOGIQUE D'AUTHENTIFICATION
+        // 3. ACTIONS AUTHENTIFICATION
         btnAuth.onclick = async () => {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
@@ -110,7 +117,8 @@
             try {
                 if (currentMode === 'LOGIN') {
                     await signIn({ username: email, password });
-                    window.location.reload(); 
+                    alert("Connecté !");
+                    window.location.reload();
                 } 
                 else if (currentMode === 'REGISTER') {
                     await signUp({ username: email, password });
@@ -119,29 +127,38 @@
                 } 
                 else if (currentMode === 'VERIFY') {
                     await confirmSignUp({ username: email, confirmationCode: code });
-                    alert("Compte validé ! Connectez-vous.");
+                    alert("Email vérifié ! Vous pouvez vous connecter.");
                     currentMode = 'LOGIN';
                     updateUI();
                 }
             } catch (err) {
-                alert("Erreur AWS: " + err.message);
+                console.error(err);
+                alert("Erreur : " + err.message);
             }
         };
 
-        // 4. PERSISTANCE DE SESSION
+        // 4. PERSISTANCE ET DECONNEXION
+        window.handleSignOut = async () => {
+            await signOut();
+            window.location.reload();
+        };
+
         window.onload = async () => {
             try {
                 const user = await getCurrentUser();
-                uiTitle.innerText = "Connecté";
-                uiSubtitle.innerText = `Session : ${user.username}`;
-                document.querySelector('.form').innerHTML = `<button class="btn" onclick="signOut(); location.reload();">Déconnexion</button>`;
+                uiTitle.innerText = "Bienvenue";
+                uiSubtitle.innerText = user.username;
+                document.querySelector('.form').innerHTML = `
+                    <button class="btn btn--primary" onclick="handleSignOut()">Déconnexion</button>
+                `;
                 document.getElementById('ui-toggle-wrapper').style.display = 'none';
             } catch (e) {
                 updateUI();
             }
         };
 
-        window.signOut = signOut; // Rendre accessible globalement
+        // Exposer la fonction de déconnexion au scope global
+        window.signOut = signOut;
     </script>
 </body>
 </html>
