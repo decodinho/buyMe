@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentification AWS - Amplify v6</title>
+    <title>Authentification AWS</title>
+    <!-- On charge Amplify en mode GLOBAL (UMD) pour éviter les erreurs CORS de modules -->
+    <script src="https://cdnjs.cloudflare.com"></script>
 </head>
 <body class="page">
 
@@ -14,54 +16,42 @@
         </div>
 
         <div class="form">
-            <!-- Email -->
             <div class="form__group">
                 <label class="form__label">Email</label>
                 <input type="email" id="auth-email" class="form__input" placeholder="nom@exemple.com">
             </div>
 
-            <!-- Mot de passe -->
             <div class="form__group" id="group-password">
                 <label class="form__label">Mot de passe</label>
                 <input type="password" id="auth-password" class="form__input" placeholder="••••••••">
             </div>
 
-            <!-- Code de vérification (caché par défaut) -->
             <div class="form__group" id="group-code" style="display: none;">
                 <label class="form__label">Code de vérification</label>
                 <input type="text" id="auth-code" class="form__input" placeholder="123456">
             </div>
 
-            <button class="btn btn--primary" id="btn-auth">Continuer</button>
+            <button class="btn btn--primary" id="btn-auth" onclick="handleAuthAction()">Continuer</button>
         </div>
 
         <div class="card__footer">
             <p class="card__alt" id="ui-toggle-wrapper">
                 <span id="toggle-text">Pas encore de compte ?</span>
-                <a class="form__link" id="link-toggle" href="#">S'inscrire</a>
+                <a class="form__link" id="link-toggle" href="#" onclick="toggleMode(event)">S'inscrire</a>
             </p>
         </div>
     </div>
 
-    <!-- LOGIQUE AMPLIFY V6 VIA UNPKG (FIX CORS) -->
-    <script type="module">
-        // Importation directe des fichiers ESM pour éviter les erreurs 404/CORS
-        import { Amplify } from 'https://unpkg.com';
-        import { 
-            signIn, 
-            signUp, 
-            confirmSignUp, 
-            signOut, 
-            getCurrentUser 
-        } from 'https://unpkg.com';
+    <script>
+        // Extraction des objets depuis le bundle global
+        const { Amplify, Auth } = window.aws_amplify;
 
-        // 1. CONFIGURATION (Remplacez par vos vrais IDs)
+        // 1. CONFIGURATION (Format v5)
         Amplify.configure({
             Auth: {
-                Cognito: {
-                    userPoolId: 'VOTRE_USER_POOL_ID',
-                    userPoolClientId: 'VOTRE_CLIENT_ID'
-                }
+                region: 'eu-west-1', // Remplacez par votre région (ex: us-east-1)
+                userPoolId: 'VOTRE_USER_POOL_ID',
+                userPoolClientId: 'VOTRE_CLIENT_ID'
             }
         });
 
@@ -76,7 +66,7 @@
         const groupCode = document.getElementById('group-code');
 
         // 2. MISE À JOUR DE L'INTERFACE
-        const updateUI = () => {
+        function updateUI() {
             if (currentMode === 'LOGIN') {
                 uiTitle.innerText = "Connexion";
                 uiSubtitle.innerText = "Heureux de vous revoir";
@@ -100,54 +90,53 @@
                 groupPass.style.display = 'none';
                 groupCode.style.display = 'block';
             }
-        };
+        }
 
-        linkToggle.onclick = (e) => {
+        window.toggleMode = (e) => {
             e.preventDefault();
             currentMode = (currentMode === 'LOGIN') ? 'REGISTER' : 'LOGIN';
             updateUI();
         };
 
-        // 3. ACTIONS AUTHENTIFICATION
-        btnAuth.onclick = async () => {
+        // 3. ACTIONS AUTHENTIFICATION (Syntaxe Auth v5)
+        window.handleAuthAction = async () => {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
             const code = document.getElementById('auth-code').value;
 
             try {
                 if (currentMode === 'LOGIN') {
-                    await signIn({ username: email, password });
+                    await Auth.signIn(email, password);
                     alert("Connecté !");
                     window.location.reload();
                 } 
                 else if (currentMode === 'REGISTER') {
-                    await signUp({ username: email, password });
+                    await Auth.signUp({ username: email, password, attributes: { email } });
                     currentMode = 'VERIFY';
                     updateUI();
                 } 
                 else if (currentMode === 'VERIFY') {
-                    await confirmSignUp({ username: email, confirmationCode: code });
-                    alert("Email vérifié ! Vous pouvez vous connecter.");
+                    await Auth.confirmSignUp(email, code);
+                    alert("Email vérifié ! Connectez-vous.");
                     currentMode = 'LOGIN';
                     updateUI();
                 }
             } catch (err) {
-                console.error(err);
-                alert("Erreur : " + err.message);
+                alert("Erreur AWS : " + err.message);
             }
         };
 
-        // 4. PERSISTANCE ET DECONNEXION
+        // 4. PERSISTANCE ET DÉCONNEXION
         window.handleSignOut = async () => {
-            await signOut();
+            await Auth.signOut();
             window.location.reload();
         };
 
         window.onload = async () => {
             try {
-                const user = await getCurrentUser();
+                const user = await Auth.currentAuthenticatedUser();
                 uiTitle.innerText = "Bienvenue";
-                uiSubtitle.innerText = user.username;
+                uiSubtitle.innerText = user.attributes.email || user.username;
                 document.querySelector('.form').innerHTML = `
                     <button class="btn btn--primary" onclick="handleSignOut()">Déconnexion</button>
                 `;
@@ -156,9 +145,6 @@
                 updateUI();
             }
         };
-
-        // Exposer la fonction de déconnexion au scope global
-        window.signOut = signOut;
     </script>
 </body>
 </html>
