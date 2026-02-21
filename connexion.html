@@ -1,72 +1,146 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Connexion</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styleConnexion.css" />
+    <meta charset="UTF-8">
+    <title>AWS Auth - Amplify v6</title>
 </head>
-  
-<body>
-  <main class="page">
-    <section class="card" aria-labelledby="login-title">
-      <header class="card__header">
-        <h1 id="login-title" class="card__title">Bienvenue</h1>
-        <p class="card__subtitle">Connectez-vous pour accéder à votre session</p>
-      </header>
+<body class="page">
 
-      <form id="loginForm" class="form" novalidate>
-        <div class="form__group">
-          <label for="login" class="form__label">Identifiant</label>
-          <input
-            type="text"
-            id="login"
-            name="login"
-            class="form__input"
-            placeholder="ex. email@domaine.com"
-            required
-          />
+    <div class="card">
+        <div class="card__header">
+            <h1 class="card__title" id="ui-title">Connexion</h1>
+            <p class="card__subtitle" id="ui-subtitle">Accédez à votre espace sécurisé</p>
         </div>
 
-        <div class="form__group">
-          <div class="form__label-row">
-            <label for="password" class="form__label">Mot de passe</label>
-            <a class="form__link" href="#">Mot de passe oublié ?</a>
-          </div>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form__input"
-            placeholder="••••••••"
-            required
-          />
+        <div class="form">
+            <!-- Groupe Email -->
+            <div class="form__group">
+                <label class="form__label">Email</label>
+                <input type="email" id="auth-email" class="form__input" placeholder="nom@exemple.com">
+            </div>
+
+            <!-- Groupe Mot de passe -->
+            <div class="form__group" id="group-password">
+                <label class="form__label">Mot de passe</label>
+                <input type="password" id="auth-password" class="form__input" placeholder="••••••••">
+            </div>
+
+            <!-- Groupe Code (caché au départ) -->
+            <div class="form__group" id="group-code" style="display: none;">
+                <label class="form__label">Code de vérification</label>
+                <input type="text" id="auth-code" class="form__input" placeholder="123456">
+            </div>
+
+            <button class="btn btn--primary" id="btn-auth">Continuer</button>
         </div>
 
-        <div class="form__actions">
-          <button type="submit" id="submitBtn" class="btn btn--primary">
-            Se connecter
-          </button>
+        <div class="card__footer">
+            <p class="card__alt" id="ui-toggle-wrapper">
+                <span id="toggle-text">Pas encore de compte ?</span>
+                <a class="form__link" id="link-toggle">S'inscrire</a>
+            </p>
         </div>
-      </form>
+    </div>
 
-      <!-- Zone pour afficher les erreurs Cognito -->
-      <div id="error-message" style="color:red; display:none; margin-top: 15px; padding: 10px; border-radius: 4px; background-color: #fee;"></div>
+    <!-- SDK AMPLIFY V6 VIA CDN -->
+    <script type="module">
+        import { Amplify } from 'https://cdn.skypack.dev';
+        import { signIn, signUp, confirmSignUp, signOut, getCurrentUser } from 'https://cdn.skypack.dev';
 
-      <footer class="card__footer">
-        <p class="card__alt">Nouveau ici ? <a class="form__link" href="#">Créer un compte</a></p>
-      </footer>
-    </section>
-  </main>
+        // 1. CONFIGURATION
+        Amplify.configure({
+            Auth: {
+                Cognito: {
+                    userPoolId: 'VOTRE_USER_POOL_ID',
+                    userPoolClientId: 'VOTRE_CLIENT_ID'
+                }
+            }
+        });
 
-  <!-- Charger Amplify AVANT votre script -->
-  <script src="https://unpkg.com/aws-amplify@latest/dist/aws-amplify.min.js"></script>
-  
-  <!-- Votre script de connexion -->
-  <script src="connexion.js"></script>
+        let currentMode = 'LOGIN'; // LOGIN, REGISTER, VERIFY
+
+        const uiTitle = document.getElementById('ui-title');
+        const uiSubtitle = document.getElementById('ui-subtitle');
+        const btnAuth = document.getElementById('btn-auth');
+        const linkToggle = document.getElementById('link-toggle');
+        const toggleText = document.getElementById('toggle-text');
+        const groupPass = document.getElementById('group-password');
+        const groupCode = document.getElementById('group-code');
+
+        // 2. GESTION DE L'INTERFACE (TOGGLE)
+        const updateUI = () => {
+            if (currentMode === 'LOGIN') {
+                uiTitle.innerText = "Connexion";
+                uiSubtitle.innerText = "Heureux de vous revoir";
+                btnAuth.innerText = "Se connecter";
+                toggleText.innerText = "Pas encore de compte ?";
+                linkToggle.innerText = "S'inscrire";
+                groupPass.style.display = 'grid';
+                groupCode.style.display = 'none';
+            } else if (currentMode === 'REGISTER') {
+                uiTitle.innerText = "Créer un compte";
+                uiSubtitle.innerText = "Rejoignez l'aventure";
+                btnAuth.innerText = "S'inscrire";
+                toggleText.innerText = "Déjà inscrit ?";
+                linkToggle.innerText = "Se connecter";
+                groupPass.style.display = 'grid';
+                groupCode.style.display = 'none';
+            } else if (currentMode === 'VERIFY') {
+                uiTitle.innerText = "Vérification";
+                uiSubtitle.innerText = "Code envoyé par e-mail";
+                btnAuth.innerText = "Confirmer le compte";
+                groupPass.style.display = 'none';
+                groupCode.style.display = 'grid';
+            }
+        };
+
+        linkToggle.onclick = (e) => {
+            e.preventDefault();
+            currentMode = (currentMode === 'LOGIN') ? 'REGISTER' : 'LOGIN';
+            updateUI();
+        };
+
+        // 3. LOGIQUE D'AUTHENTIFICATION
+        btnAuth.onclick = async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const code = document.getElementById('auth-code').value;
+
+            try {
+                if (currentMode === 'LOGIN') {
+                    await signIn({ username: email, password });
+                    window.location.reload(); 
+                } 
+                else if (currentMode === 'REGISTER') {
+                    await signUp({ username: email, password });
+                    currentMode = 'VERIFY';
+                    updateUI();
+                } 
+                else if (currentMode === 'VERIFY') {
+                    await confirmSignUp({ username: email, confirmationCode: code });
+                    alert("Compte validé ! Connectez-vous.");
+                    currentMode = 'LOGIN';
+                    updateUI();
+                }
+            } catch (err) {
+                alert("Erreur AWS: " + err.message);
+            }
+        };
+
+        // 4. PERSISTANCE DE SESSION
+        window.onload = async () => {
+            try {
+                const user = await getCurrentUser();
+                uiTitle.innerText = "Connecté";
+                uiSubtitle.innerText = `Session : ${user.username}`;
+                document.querySelector('.form').innerHTML = `<button class="btn" onclick="signOut(); location.reload();">Déconnexion</button>`;
+                document.getElementById('ui-toggle-wrapper').style.display = 'none';
+            } catch (e) {
+                updateUI();
+            }
+        };
+
+        window.signOut = signOut; // Rendre accessible globalement
+    </script>
 </body>
 </html>
